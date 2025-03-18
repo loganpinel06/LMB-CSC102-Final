@@ -132,6 +132,11 @@ class Timer(PhaseThread):
         self._paused = not self._paused
         # blink the 7-segment display when paused
         self._display.blink_rate = (2 if self._paused else 0)
+    
+    #GET TO KNOW THE PROJECT QUESTION #8
+    #reset method to reset the timer back to 5 minutes
+    def reset(self):
+        self._value = 300
 
     def __str__(self):
         return f"{self._min}:{self._sec}"
@@ -143,6 +148,9 @@ class Keypad(PhaseThread):
         self._value = ""
         # the keypad pins
         self._keypad = keypad
+        #GET TO KNOW THE PROJECT QUESTION #8
+        #create a variable to store the character limit
+        self._charlimit = 4
 
     # runs the thread
     def run(self):
@@ -161,9 +169,16 @@ class Keypad(PhaseThread):
                 if (key == "*" and STAR_CLEARS_PASS):
                     self._value = ""
                 # we haven't yet reached the max pass length (otherwise, we just ignore the keypress)
-                elif (len(self._value) < MAX_PASS_LEN):
+                #elif (len(self._value) < MAX_PASS_LEN):
                     # log the key
+                    #self._value += str(key)
+                #GET TO KNOW THE PROJECT QUESTION #8
+                #elif the length is equal to the charlimit
+                elif len(self._value) == self._charlimit:
+                    #log the key
                     self._value += str(key)
+                    #modify the value to be the last 4 chars using slicing
+                    self._value = self._value[-self._charlimit:]
             sleep(0.1)
         self._running = False
 
