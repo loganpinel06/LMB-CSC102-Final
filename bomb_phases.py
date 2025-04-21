@@ -243,7 +243,7 @@ class Wires(PhaseThread):
         #main loop for the phase
         while (self._running):
             # get the jumper wire states (0->False, 1->True)
-            self._value = "".join([str(int(pin.value)) for pin in self._pins])
+            self._value = "".join([str(int(pin.value)) for pin in self._component]) 
             #check if the correct wires are connected
             #first and last wires
             if (self._value[0] == "1" and self._value[-1] == "1"):
@@ -259,8 +259,8 @@ class Wires(PhaseThread):
         if (self._defused):
             return "DEFUSED"
         else:
-            # TODO
-            pass
+           #return the value of the wires as a string
+           return f"{self._value}"
 
 # the pushbutton phase
 class Button(PhaseThread):
