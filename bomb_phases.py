@@ -307,12 +307,9 @@ class Toggles(PhaseThread):
             # get the toggle switch values (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component])
             
-<<<<<<< Updated upstream
-        
-=======
+
             if self._value == "0101":
                 self._defused = True
->>>>>>> Stashed changes
             
             sleep(0.1)
             
