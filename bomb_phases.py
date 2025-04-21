@@ -298,16 +298,23 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-
+        self._value = ""
+        
     # runs the thread
     def run(self):
-        # TODO
-        pass
+        self._running = True
+        while (self._running):
+            # get the toggle switch values (0->False, 1->True)
+            self._value = "".join([str(int(pin.value)) for pin in self._component])
+            
+        
+            
+            sleep(0.1)
+            
 
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
             return "DEFUSED"
         else:
-            # TODO
-            pass
+            return f"{self._value}"
