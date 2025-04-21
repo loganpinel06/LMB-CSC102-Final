@@ -344,6 +344,10 @@ def check():
     if (keypad._running):
         # update the GUI
         gui._lkeypad.config(text=f"Combination: {keypad}")
+
+        if str(keypad) == 1234:
+            print("Correct Password. Defusing \nBomb...")
+            quit()
     # check the wires
     if (wires._running):
         # update the GUI
