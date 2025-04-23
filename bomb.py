@@ -9,9 +9,6 @@ from bomb_configs import *
 # import the phases
 from bomb_phases import *
 
-#GLOBAL VARIABLE FOR THE COLORPHASES
-COLORPHASES = "red"
-
 ###########
 # functions
 ###########
@@ -368,7 +365,7 @@ def bootup(phase, n=0):
             phase._gui._lscroll["text"] += boot_text[n]
 
         # scroll the next character after a slight delay (\x00 is a longer delay)
-        phase._gui.after(25 if boot_text[n] != "\x00" else 750, bootup, n + 1)
+        phase._gui.after(25 if boot_text[n] != "\x00" else 750, bootup, phase, n + 1)
 
 
 window = Tk()
@@ -381,7 +378,7 @@ strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
 
 # "boot" the bomb
-window.after(1000, bootup, red_phase)
+window.after(1000, bootup, green_phase)
 
 # display the LCD GUI
 window.mainloop()
