@@ -311,9 +311,9 @@ class Toggles(PhaseThread):
             if self._value == "1111":
                 self._defused = True
             if self._value == "0001":
-                timer._value = timer._value + 30
+                Timer._value = Timer._value + 30
             if self._value == "1000":
-                timer._value = 500
+                Timer._value = 500
             
             sleep(0.1)
             
