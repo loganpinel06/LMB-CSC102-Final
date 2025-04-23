@@ -189,10 +189,12 @@ class Timer(PhaseThread):
 
 # the keypad phase
 class Keypad(PhaseThread):
-    def __init__(self, component, target="1234", name="Keypad"):
+    def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
         # the default value is an empty string
         self._value = ""
+        #need to check the genKeypadCombo in bomb_configs later
+        self._target = "1234"
 
     # runs the thread
     def run(self):
@@ -212,11 +214,11 @@ class Keypad(PhaseThread):
                 self._value += str(key)
                 # the combination is correct -> phase defused
                 if (self._value[-1] == "*"):
-                    self._value = self._value[:len(self._value) - 1]
+                    self._value = self._value[:-1]
                     if (self._value == self._target):
                         self._defused = True
                     # the combination is incorrect -> phase failed (strike)
-                    elif (self._value != self._target[0:len(self._value)]):
+                    elif (self._value != self._target):
                         self._failed = True
             sleep(0.1)
 
