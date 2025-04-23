@@ -65,8 +65,8 @@ class Lcd(Frame):
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
         self._lstrikes.grid(row=5, column=2, sticky=W)
         #current color phase
-        self.lcolorphase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Color phase: {}".format(self._colorphase))
-        self.lcolorphase.grid(row=5, column=1, sticky=W)
+        self._lcolorphase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Color phase: {}".format(self._colorphase))
+        self._lcolorphase.grid(row=1, column=2, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)
@@ -98,6 +98,8 @@ class Lcd(Frame):
         self._lbutton.destroy()
         self._ltoggles.destroy()
         self._lstrikes.destroy()
+        #destroy the color phase label
+        self._lcolorphase.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
