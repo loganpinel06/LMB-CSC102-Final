@@ -308,8 +308,12 @@ class Toggles(PhaseThread):
             self._value = "".join([str(int(pin.value)) for pin in self._component])
             
 
-            if self._value == "0101":
+            if self._value == "1111":
                 self._defused = True
+            if self._value == "0001":
+                timer._value = timer._value + 30
+            if self._value == "1000":
+                timer._value = 500
 
             
             sleep(0.1)
