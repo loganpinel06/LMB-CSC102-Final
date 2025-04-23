@@ -19,7 +19,8 @@ import sys
 #########
 # the LCD display GUI
 class Lcd(Frame):
-    def __init__(self, window):
+    #add the color phase parameter to the constructor
+    def __init__(self, window, colorphase):
         super().__init__(window, bg="black")
         # make the GUI fullscreen
         window.attributes("-fullscreen", True)
@@ -27,6 +28,8 @@ class Lcd(Frame):
         self._timer = None
         # we need to know about the pushbutton to turn off its LED when the program exits
         self._button = None
+        #initialize the colorphase
+        self._colorphase = colorphase
         # setup the initial "boot" GUI
         self.setupBoot()
 
@@ -61,6 +64,9 @@ class Lcd(Frame):
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
         self._lstrikes.grid(row=5, column=2, sticky=W)
+        #current color phase
+        self.lcolorphase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Color phase: {}".format(self._colorphase))
+        self.lcolorphase.grid(row=5, column=1, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)

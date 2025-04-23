@@ -9,6 +9,9 @@ from bomb_configs import *
 # import the phases
 from bomb_phases import *
 
+#GLOBAL VARIABLE FOR THE COLORPHASES
+COLORPHASES = "red"
+
 ###########
 # functions
 ###########
@@ -179,7 +182,8 @@ def turn_off():
 
 # initialize the LCD GUI
 window = Tk()
-gui = Lcd(window)
+#pass the color phase parameter to the Lcd class
+gui = Lcd(window, COLORPHASES)
 
 # initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES
