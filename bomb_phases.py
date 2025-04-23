@@ -183,6 +183,14 @@ class Timer(PhaseThread):
         # blink the 7-segment display when paused
         self._component.blink_rate = (2 if self._paused else 0)
 
+    def setTime(self, v):
+        self._value = v
+    def getTime(self):
+        return self._value
+    def addTime(self, v):
+        self._value = self.getTime()+v
+    
+    
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
@@ -311,9 +319,9 @@ class Toggles(PhaseThread):
             if self._value == "1111":
                 self._defused = True
             if self._value == "0001":
-                Timer._value = Timer._value + 30
+                Timer.addTime(30)
             if self._value == "1000":
-                Timer._value = 500
+                Timer.setTime(360)
             
             sleep(0.1)
             
