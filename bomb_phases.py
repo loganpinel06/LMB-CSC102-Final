@@ -13,6 +13,7 @@ from threading import Thread
 from time import sleep
 import os
 import sys
+#create global variables to change clock
 globalAdd = 0
 globalSet = 0
 #########
@@ -160,6 +161,7 @@ class Timer(PhaseThread):
         self._running = True
         while (self._running):
             if (not self._paused):
+                #if global set changed it sets timer value to global set then changes global set back to 0
                 if globalSet != 0:
                     self._value = globalSet
                     globalSet = 0
@@ -171,6 +173,8 @@ class Timer(PhaseThread):
                 # the timer has expired -> phase failed (explode)
                 if (self._value == 0):
                     self._running = False
+                #adds globalAdd and sets to 0 after
+                #if globalAdd = 0 nothing happens anyways, so only changes timer value when global set is changed.
                 self._value+=globalAdd
                 self._value -= 1
                 globalAdd = 0
@@ -314,7 +318,7 @@ class Toggles(PhaseThread):
             # get the toggle switch values (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component])
             
-
+            #testing
             if self._value == "1111":
                 self._defused = True
             if self._value == "1000":
