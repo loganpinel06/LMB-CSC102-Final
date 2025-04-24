@@ -188,13 +188,6 @@ class Timer(PhaseThread):
         self._paused = not self._paused
         # blink the 7-segment display when paused
         self._component.blink_rate = (2 if self._paused else 0)
-
-    def setTime(self, v):
-        self._value = v
-    def getTime(self):
-        return self._value
-    def addTime(self, v):
-        self._value = self.getTime()+v
     
     
     # returns the timer as a string (mm:ss)
