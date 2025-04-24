@@ -13,7 +13,8 @@ from threading import Thread
 from time import sleep
 import os
 import sys
-
+globalAdd = 0
+globalSet = 0
 #########
 # classes
 #########
@@ -159,6 +160,9 @@ class Timer(PhaseThread):
         self._running = True
         while (self._running):
             if (not self._paused):
+                if globalSet != 0:
+                    self._value = globalSet
+                    globalSet = 0
                 # update the timer and display its value on the 7-segment display
                 self._update()
                 self._component.print(str(self))
@@ -167,7 +171,9 @@ class Timer(PhaseThread):
                 # the timer has expired -> phase failed (explode)
                 if (self._value == 0):
                     self._running = False
+                self._value+=globalAdd
                 self._value -= 1
+                globalAdd = 0
             else:
                 sleep(0.1)
 
@@ -318,10 +324,10 @@ class Toggles(PhaseThread):
 
             if self._value == "1111":
                 self._defused = True
-            if self._value == "0001":
-                Timer.addTime(30)
             if self._value == "1000":
-                Timer.setTime(360)
+                globalAdd = 30
+            if self._value = "0001":
+                globalSet = 360
             
             sleep(0.1)
             
