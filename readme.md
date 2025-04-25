@@ -1,5 +1,9 @@
 Matt's Ideas for Trivia in Lebron Phases:
 
+3 puzzles for toggles
+3 puzzles for wires
+3 puzzles for button
+1 puzzle at end for keypad 
 
 -Wires
     -TBD
