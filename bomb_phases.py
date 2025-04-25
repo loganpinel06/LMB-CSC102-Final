@@ -14,8 +14,8 @@ from time import sleep
 import os
 import sys
 #create global variables to change clock
-globalAdd = 0
-globalSet = 0
+ADD = 0
+SET = 0
 #########
 # classes
 #########
@@ -158,13 +158,15 @@ class Timer(PhaseThread):
 
     # runs the thread
     def run(self):
+        global SET
+        global ADD
         self._running = True
         while (self._running):
             if (not self._paused):
                 #if global set changed it sets timer value to global set then changes global set back to 0
-                if globalSet != 0:
-                    self._value = globalSet
-                    globalSet = 0
+                if SET != 0:
+                    self._value = SET
+                    SET = 0
                 # update the timer and display its value on the 7-segment display
                 self._update()
                 self._component.print(str(self))
@@ -173,11 +175,11 @@ class Timer(PhaseThread):
                 # the timer has expired -> phase failed (explode)
                 if (self._value == 0):
                     self._running = False
-                #adds globalAdd and sets to 0 after
-                #if globalAdd = 0 nothing happens anyways, so only changes timer value when global set is changed.
-                self._value+=globalAdd
+                #adds ADD and sets to 0 after
+                #if ADD = 0 nothing happens anyways, so only changes timer value when global set is changed.
+                self._value+=ADD
                 self._value -= 1
-                globalAdd = 0
+                ADD = 0
             else:
                 sleep(0.1)
 
@@ -307,6 +309,8 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
+    global SET
+    global ADD
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
@@ -322,9 +326,9 @@ class Toggles(PhaseThread):
             if self._value == "1111":
                 self._defused = True
             if self._value == "1000":
-                globalAdd = 30
+                ADD = 30
             if self._value == "0001":
-                globalSet = 360
+                SET = 360
             
             sleep(0.1)
             
