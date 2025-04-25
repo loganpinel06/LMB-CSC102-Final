@@ -323,7 +323,7 @@ class Toggles(PhaseThread):
                 self._defused = True
             if self._value == "1000":
                 globalAdd = 30
-            if self._value = "0001":
+            if self._value == "0001":
                 globalSet = 360
             
             sleep(0.1)
