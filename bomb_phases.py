@@ -13,13 +13,16 @@ from threading import Thread
 from time import sleep
 import os
 import sys
-
+#create global variables to change clock
+ADD = 0
+SET = 0
 #########
 # classes
 #########
 # the LCD display GUI
 class Lcd(Frame):
-    def __init__(self, window):
+    #add the color phase parameter to the constructor
+    def __init__(self, window, colorphase):
         super().__init__(window, bg="black")
         # make the GUI fullscreen
         window.attributes("-fullscreen", True)
@@ -27,6 +30,8 @@ class Lcd(Frame):
         self._timer = None
         # we need to know about the pushbutton to turn off its LED when the program exits
         self._button = None
+        #initialize the colorphase
+        self._colorphase = colorphase
         # setup the initial "boot" GUI
         self.setupBoot()
 
@@ -61,6 +66,9 @@ class Lcd(Frame):
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
         self._lstrikes.grid(row=5, column=2, sticky=W)
+        #current color phase
+        self._lcolorphase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Color phase: {}".format(self._colorphase))
+        self._lcolorphase.grid(row=1, column=2, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)
@@ -92,6 +100,8 @@ class Lcd(Frame):
         self._lbutton.destroy()
         self._ltoggles.destroy()
         self._lstrikes.destroy()
+        #destroy the color phase label
+        self._lcolorphase.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
@@ -158,7 +168,13 @@ class Timer(PhaseThread):
     def run(self):
         self._running = True
         while (self._running):
+            #call global variables
+            global ADD, SET
             if (not self._paused):
+                #if global set changed it sets timer value to global set then changes global set back to 0
+                if SET != 0:
+                    self._value = SET
+                    SET = 0
                 # update the timer and display its value on the 7-segment display
                 self._update()
                 self._component.print(str(self))
@@ -167,7 +183,11 @@ class Timer(PhaseThread):
                 # the timer has expired -> phase failed (explode)
                 if (self._value == 0):
                     self._running = False
+                #adds ADD and sets to 0 after
+                #if ADD = 0 nothing happens anyways, so only changes timer value when global set is changed.
+                self._value += ADD
                 self._value -= 1
+                ADD = 0
             else:
                 sleep(0.1)
 
@@ -182,7 +202,8 @@ class Timer(PhaseThread):
         self._paused = not self._paused
         # blink the 7-segment display when paused
         self._component.blink_rate = (2 if self._paused else 0)
-
+    
+    
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
@@ -321,16 +342,31 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-
+        self._value = ""
+        
     # runs the thread
     def run(self):
-        # TODO
-        pass
+        self._running = True
+        while (self._running):
+            # get the toggle switch values (0->False, 1->True)
+            self._value = "".join([str(int(pin.value)) for pin in self._component])
+            
+            #call global variables
+            global ADD, SET
+            #testing
+            if self._value == "1111":
+                self._defused = True
+            if self._value == "1000":
+                ADD = 30
+            if self._value == "0001":
+                SET = 360
+            
+            sleep(0.1)
+            
 
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
             return "DEFUSED"
         else:
-            # TODO
-            pass
+            return f"{self._value}"
