@@ -13,7 +13,9 @@ from threading import Thread
 from time import sleep
 import os
 import sys
-
+#create global variables to change clock
+ADD = 0
+SET = 0
 #########
 # classes
 #########
@@ -166,7 +168,13 @@ class Timer(PhaseThread):
     def run(self):
         self._running = True
         while (self._running):
+            #call global variables
+            global ADD, SET
             if (not self._paused):
+                #if global set changed it sets timer value to global set then changes global set back to 0
+                if SET != 0:
+                    self._value = SET
+                    SET = 0
                 # update the timer and display its value on the 7-segment display
                 self._update()
                 self._component.print(str(self))
@@ -175,7 +183,11 @@ class Timer(PhaseThread):
                 # the timer has expired -> phase failed (explode)
                 if (self._value == 0):
                     self._running = False
+                #adds ADD and sets to 0 after
+                #if ADD = 0 nothing happens anyways, so only changes timer value when global set is changed.
+                self._value += ADD
                 self._value -= 1
+                ADD = 0
             else:
                 sleep(0.1)
 
@@ -190,7 +202,8 @@ class Timer(PhaseThread):
         self._paused = not self._paused
         # blink the 7-segment display when paused
         self._component.blink_rate = (2 if self._paused else 0)
-
+    
+    
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
@@ -201,6 +214,8 @@ class Keypad(PhaseThread):
         super().__init__(name, component, target)
         # the default value is an empty string
         self._value = ""
+        #need to check the genKeypadCombo in bomb_configs later
+        self._target = "1234"
 
     # runs the thread
     def run(self):
@@ -219,11 +234,13 @@ class Keypad(PhaseThread):
                 # log the key
                 self._value += str(key)
                 # the combination is correct -> phase defused
-                if (self._value == self._target):
-                    self._defused = True
-                # the combination is incorrect -> phase failed (strike)
-                elif (self._value != self._target[0:len(self._value)]):
-                    self._failed = True
+                if (self._value[-1] == "*"):
+                    self._value = self._value[:-1]
+                    if (self._value == self._target):
+                        self._defused = True
+                    # the combination is incorrect -> phase failed (strike)
+                    elif (self._value != self._target):
+                        self._failed = True
             sleep(0.1)
 
     # returns the keypad combination as a string
@@ -325,16 +342,31 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-
+        self._value = ""
+        
     # runs the thread
     def run(self):
-        # TODO
-        pass
+        self._running = True
+        while (self._running):
+            # get the toggle switch values (0->False, 1->True)
+            self._value = "".join([str(int(pin.value)) for pin in self._component])
+            
+            #call global variables
+            global ADD, SET
+            #testing
+            if self._value == "1111":
+                self._defused = True
+            if self._value == "1000":
+                ADD = 30
+            if self._value == "0001":
+                SET = 360
+            
+            sleep(0.1)
+            
 
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
             return "DEFUSED"
         else:
-            # TODO
-            pass
+            return f"{self._value}"
