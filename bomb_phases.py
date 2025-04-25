@@ -14,8 +14,8 @@ from time import sleep
 import os
 import sys
 #create global variables to change clock
-ADD = 0
-SET = 0
+#ADD = 0
+#SET = 0
 #########
 # classes
 #########
@@ -309,8 +309,6 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    global SET
-    global ADD
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
