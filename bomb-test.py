@@ -342,8 +342,6 @@ def check():
         quit()
     # check the keypad
     if (keypad._running):
-        # update the GUI
-        gui._lkeypad.config(text=f"Combination: {keypad}")
     # check the wires
     if (wires._running):
         # update the GUI
