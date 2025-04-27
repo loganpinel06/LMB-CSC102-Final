@@ -274,13 +274,17 @@ class Keypad(PhaseThread):
 # the jumper wires phase
 class Wires(PhaseThread):
     #set the target equal to the correct combination
-    def __init__(self, component, target="cut", name="Wires"):
+    def __init__(self, component, colorphase, target="10001", name="Wires"):
         super().__init__(name, component, target)
         #set the value of the wires to an empty string
         self._value = ""
-        #might need to set them all to 1 and then loop through to display properly?
-        #not sure how the .join call works below
-
+        #set target based on the colorphase
+        if colorphase == "Red":
+            self._target = "10001"
+        elif colorphase == "Green":
+            self._target = "00100"
+        elif colorphase == "Blue":
+            self._target = "01010"
 
     # runs the thread
     def run(self):
@@ -290,14 +294,11 @@ class Wires(PhaseThread):
         while (self._running):
             # get the jumper wire states (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component]) 
-            #check if the correct wires are connected
-            #first and last wires
-            if (self._value[0] == "1" and self._value[-1] == "1"):
-                #check if the middle wires are not connected
-                #5 wires so middle 3 should have a string 3 chars long
-                if (self._value[1:4] == "000"):
-                    #phase is defused
-                    self._defused = True
+            #check if the value of the wires is equal to the target
+            if (self._value == self._target):
+                #the phase is defused
+                self._defused = True
+                
             sleep(0.1)
 
     # returns the jumper wires state as a string

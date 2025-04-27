@@ -35,7 +35,7 @@ class BombPhase:
         #setup the keypad thread
         self._keypad = Keypad(component_keypad, keypad_target)
         #setup the jumper wires thread
-        self._wires = Wires(component_wires, wires_target)
+        self._wires = Wires(component_wires, self._colorphase, wires_target)
         #setup the pushbutton thread
         self._button = Button(component_button_state, component_button_RGB, button_target, button_color, self._timer)
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
@@ -215,9 +215,9 @@ def start_next_phase(current_phase):
 window = Tk()
 
 #create objects of the BombPhase class for each color phase
-red_phase=BombPhase("red", Lcd(window, "Red"))
-green_phase=BombPhase("green", Lcd(window, "Green"))
-blue_phase=BombPhase("blue", Lcd(window, "Blue"))
+red_phase=BombPhase("Red", Lcd(window, "Red"))
+green_phase=BombPhase("Green", Lcd(window, "Green"))
+blue_phase=BombPhase("Blue", Lcd(window, "Blue"))
 
 #initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES
