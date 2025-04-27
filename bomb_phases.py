@@ -90,6 +90,29 @@ class Lcd(Frame):
         if (RPi):
             self._timer.pause()
 
+    #mimic the conclusion method but for concluding each color phase
+    def colorphaseconclusion(self, success=False):
+        # destroy/clear widgets that are no longer needed
+        self._lscroll["text"] = ""
+        self._ltimer.destroy()
+        self._lkeypad.destroy()
+        self._lwires.destroy()
+        self._lbutton.destroy()
+        self._ltoggles.destroy()
+        self._lstrikes.destroy()
+        #destroy the color phase label
+        self._lcolorphase.destroy()
+        if (SHOW_BUTTONS):
+            self._bpause.destroy()
+            self._bquit.destroy()
+
+        # reconfigure the GUI
+        #add a label to state the color phase is complete and that the next phase is starting
+        self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._colorphase} phase complete! Next phase starting...")
+        self._lcompletedMessage.grid(row=1, column=1, sticky=W)
+
+
+
     # setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed

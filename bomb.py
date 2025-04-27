@@ -197,6 +197,10 @@ def bootup(phase, n=0):
 def start_next_phase(current_phase):
     #stop the current phase
     current_phase.turn_off()
+    #conclude the current color phase
+    current_phase._gui.after(100, current_phase._gui.conclusion, True)
+    #sleep for 3 seconds before destorying the GUI
+    sleep(3000)
     #destroy the LCD GUI
     current_phase._gui.destroy()
     
@@ -213,16 +217,16 @@ def start_next_phase(current_phase):
 window = Tk()
 
 #create objects of the BombPhase class for each color phase
-red_phase=BombPhase("red", Lcd(window, "red"))
-green_phase=BombPhase("green", Lcd(window, "green"))
-blue_phase=BombPhase("blue", Lcd(window, "blue"))
+red_phase=BombPhase("red", Lcd(window, "Red"))
+green_phase=BombPhase("green", Lcd(window, "Green"))
+blue_phase=BombPhase("blue", Lcd(window, "Blue"))
 
 #initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
 
 #"boot" the bomb
-window.after(1000, bootup, green_phase)
+window.after(1000, bootup, red_phase)
 
 #display the LCD GUI
 window.mainloop()
