@@ -199,16 +199,16 @@ def start_next_phase(current_phase):
     current_phase.turn_off()
     #conclude the current color phase
     current_phase._gui.after(100, current_phase._gui.colorphaseconclusion, True)
-    #destroy the LCD GUI after 3 seconds
-    current_phase._gui.after(3100, current_phase._gui.destroy)
+    #destroy the LCD GUI after 5 seconds
+    current_phase._gui.after(5000, current_phase._gui.destroy)
     
     #start the next color phase
     if (current_phase == red_phase):
         #bootup the green phase
-        window.after(1000, bootup, green_phase)
+        window.after(5000, bootup, green_phase)
     elif (current_phase == green_phase):
         #bootup the blue phase
-        window.after(1000, bootup, blue_phase)
+        window.after(5000, bootup, blue_phase)
 
 
 #initialize the LCD GUI

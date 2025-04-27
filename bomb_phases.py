@@ -111,8 +111,6 @@ class Lcd(Frame):
         self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._colorphase} phase complete! Next phase starting...")
         self._lcompletedMessage.grid(row=1, column=1, sticky=W)
 
-
-
     # setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
