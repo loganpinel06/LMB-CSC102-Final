@@ -197,14 +197,16 @@ def bootup(phase, n=0):
 def start_next_phase(current_phase):
     #stop the current phase
     current_phase.turn_off()
+    #destroy the LCD GUI
+    current_phase._gui.destroy()
     
     #start the next color phase
     if (current_phase == red_phase):
-        green_phase.setup_phases()
-        green_phase.check_phases()
+        #bootup the green phase
+        window.after(1000, bootup, green_phase)
     elif (current_phase == green_phase):
-        blue_phase.setup_phases()
-        blue_phase.check_phases()
+        #bootup the blue phase
+        window.after(1000, bootup, blue_phase)
 
 
 #initialize the LCD GUI
