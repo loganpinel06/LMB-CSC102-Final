@@ -198,11 +198,9 @@ def start_next_phase(current_phase):
     #stop the current phase
     current_phase.turn_off()
     #conclude the current color phase
-    current_phase._gui.after(100, current_phase._gui.conclusion, True)
-    #sleep for 3 seconds before destorying the GUI
-    sleep(3000)
-    #destroy the LCD GUI
-    current_phase._gui.destroy()
+    current_phase._gui.after(100, current_phase._gui.colorphaseconclusion, True)
+    #destroy the LCD GUI after 3 seconds
+    current_phase._gui.after(3100, current_phase._gui.destroy)
     
     #start the next color phase
     if (current_phase == red_phase):
