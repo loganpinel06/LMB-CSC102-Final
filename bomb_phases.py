@@ -21,8 +21,8 @@ SET = 0
 #########
 # the LCD display GUI
 class Lcd(Frame):
-    #add the color phase parameter to the constructor
-    def __init__(self, window, colorphase):
+    #add the game phase parameter to the constructor
+    def __init__(self, window, gamephase):
         super().__init__(window, bg="black")
         # make the GUI fullscreen
         window.attributes("-fullscreen", True)
@@ -30,8 +30,8 @@ class Lcd(Frame):
         self._timer = None
         # we need to know about the pushbutton to turn off its LED when the program exits
         self._button = None
-        #initialize the colorphase
-        self._colorphase = colorphase
+        #initialize the gamephase
+        self._gamephase = gamephase
         # setup the initial "boot" GUI
         self.setupBoot()
 
@@ -66,9 +66,9 @@ class Lcd(Frame):
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
         self._lstrikes.grid(row=5, column=2, sticky=W)
-        #current color phase
-        self._lcolorphase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Color phase: {}".format(self._colorphase))
-        self._lcolorphase.grid(row=1, column=2, sticky=W)
+        #current game phase
+        self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
+        self._lgamephase.grid(row=1, column=2, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)
@@ -90,8 +90,8 @@ class Lcd(Frame):
         if (RPi):
             self._timer.pause()
 
-    #mimic the conclusion method but for concluding each color phase
-    def colorphaseconclusion(self, success=False):
+    #mimic the conclusion method but for concluding each game phase
+    def gamephaseconclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
@@ -100,15 +100,15 @@ class Lcd(Frame):
         self._lbutton.destroy()
         self._ltoggles.destroy()
         self._lstrikes.destroy()
-        #destroy the color phase label
-        self._lcolorphase.destroy()
+        #destroy the game phase label
+        self._lgamephase.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
 
         # reconfigure the GUI
-        #add a label to state the color phase is complete and that the next phase is starting
-        self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._colorphase} phase complete! Next phase starting...")
+        #add a label to state the game phase is complete and that the next phase is starting
+        self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._gamephase} phase complete! Next phase starting...")
         self._lcompletedMessage.grid(row=1, column=1, sticky=W)
 
     # setup the conclusion GUI (explosion/defusion)
@@ -121,8 +121,8 @@ class Lcd(Frame):
         self._lbutton.destroy()
         self._ltoggles.destroy()
         self._lstrikes.destroy()
-        #destroy the color phase label
-        self._lcolorphase.destroy()
+        #destroy the game phase label
+        self._lgamephase.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
@@ -274,16 +274,16 @@ class Keypad(PhaseThread):
 # the jumper wires phase
 class Wires(PhaseThread):
     #set the target equal to the correct combination
-    def __init__(self, component, colorphase, target="10001", name="Wires"):
+    def __init__(self, component, gamephase, target="10001", name="Wires"):
         super().__init__(name, component, target)
         #set the value of the wires to an empty string
         self._value = ""
-        #set target based on the colorphase
-        if colorphase == "Red":
+        #set target based on the gamephase
+        if gamephase == "Cavs":
             self._target = "10001"
-        elif colorphase == "Green":
+        elif gamephase == "Heat":
             self._target = "00100"
-        elif colorphase == "Blue":
+        elif gamephase == "Lakers":
             self._target = "01010"
 
     # runs the thread

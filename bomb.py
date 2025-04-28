@@ -11,12 +11,12 @@ from bomb_phases import *
 
 #create a class for the BombPhases
 #this will act as a parent class to run all bomb phases but will allow us to do this three times
-#for each color phase
+#for each game phase
 class BombPhase:
-    #constructor passing in the colorphase and the gui element
-    def __init__(self, colorphase, gui):
+    #constructor passing in the gamephase and the gui element
+    def __init__(self, gamephase, gui):
         #initialize instance variables
-        self._colorphase = colorphase
+        self._gamephase = gamephase
         self._gui = gui
         self._timer = None
         self._keypad = None
@@ -35,7 +35,7 @@ class BombPhase:
         #setup the keypad thread
         self._keypad = Keypad(component_keypad, keypad_target)
         #setup the jumper wires thread
-        self._wires = Wires(component_wires, self._colorphase, wires_target)
+        self._wires = Wires(component_wires, self._gamephase, wires_target)
         #setup the pushbutton thread
         self._button = Button(component_button_state, component_button_RGB, button_target, button_color, self._timer)
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
@@ -55,8 +55,6 @@ class BombPhase:
         #check the timer
         if (self._timer._running):
             #update the GUI
-            #might not need to update the colorphase but here if needed
-            #self._gui._lcolorphase["text"] = f"Color Phase: {self._colorphase}"
             self._gui._ltimer["text"] = f"Time left: {self._timer}"
         else:
             #the countdown has expired -> explode!
@@ -130,17 +128,17 @@ class BombPhase:
             return
     
         #the bomb has been successfully defused!
-        #bomb will only fully shut off after the blue color phase
-        if (self._active_phases == 0 and self._colorphase == "blue"):
+        #bomb will only fully shut off after the lakers game phase
+        if (self._active_phases == 0 and self._gamephase == "Lakers"):
             #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(100, self._gui.conclusion, True)
             #stop checking phases
             return
         
-        #color phase has been successfully defused!
-        if (self._active_phases == 0 and self._colorphase != "blue"):
-            #start the next color phase
+        #game phase has been successfully defused!
+        if (self._active_phases == 0 and self._gamephase != "Lakers"):
+            #start the next game phase
             start_next_phase(self)
             #stop checking phases
             return
@@ -154,7 +152,7 @@ class BombPhase:
         self._strikes_left -= 1
 
     #method to setup turn off
-    #this will also be used to stop a phase when changing the color phases
+    #this will also be used to stop a phase when changing the game phases
     def turn_off(self):
         #stop all threads
         self._timer._running = False
@@ -193,38 +191,38 @@ def bootup(phase, n=0):
         #scroll the next character after a slight delay (\x00 is a longer delay)
         phase._gui.after(25 if boot_text[n] != "\x00" else 750, bootup, phase, n + 1)
 
-#method to start the next color phase
+#method to start the next game phase
 def start_next_phase(current_phase):
     #stop the current phase
     current_phase.turn_off()
-    #conclude the current color phase
-    current_phase._gui.after(100, current_phase._gui.colorphaseconclusion, True)
+    #conclude the current game phase
+    current_phase._gui.after(100, current_phase._gui.gamephaseconclusion, True)
     #destroy the LCD GUI after 5 seconds
     current_phase._gui.after(5000, current_phase._gui.destroy)
     
-    #start the next color phase
-    if (current_phase == red_phase):
-        #bootup the green phase
-        window.after(5000, bootup, green_phase)
-    elif (current_phase == green_phase):
-        #bootup the blue phase
-        window.after(5000, bootup, blue_phase)
+    #start the next game phase
+    if (current_phase == cavs_phase):
+        #bootup the heat phase
+        window.after(5000, bootup, heat_phase)
+    elif (current_phase == heat_phase):
+        #bootup the lakers phase
+        window.after(5000, bootup, lakers_phase)
 
 
 #initialize the LCD GUI
 window = Tk()
 
-#create objects of the BombPhase class for each color phase
-red_phase=BombPhase("Red", Lcd(window, "Red"))
-green_phase=BombPhase("Green", Lcd(window, "Green"))
-blue_phase=BombPhase("Blue", Lcd(window, "Blue"))
+#create objects of the BombPhase class for each game phase
+cavs_phase=BombPhase("Cavs", Lcd(window, "Cavs"))
+heat_phase=BombPhase("Heat", Lcd(window, "Heat"))
+lakers_phase=BombPhase("Lakers", Lcd(window, "Lakers"))
 
 #initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
 
 #"boot" the bomb
-window.after(1000, bootup, red_phase)
+window.after(1000, bootup, cavs_phase)
 
 #display the LCD GUI
 window.mainloop()
