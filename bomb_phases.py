@@ -176,12 +176,12 @@ class Timer(PhaseThread):
     def __init__(self, component, gamephase, initial_value, name="Timer"):
         super().__init__(name, component)
         # the default value is the specified initial value
-        if self._gamephase == "Cavs":
-            self._value = 300
-        if self._gamephase == "Heat":
-            self._value = 240
-        if self._gamephase == "Lakers":
-            self._value = 180
+        if gamephase == "Cavs":
+            self._value = initial_value
+        if gamephase == "Heat":
+            self._value = initial_value-60
+        if gamephase == "Lakers":
+            self._value = initial_value-120
         # is the timer paused?
         self._paused = False
         # initialize the timer's minutes/seconds representation
