@@ -316,7 +316,7 @@ class Wires(PhaseThread):
 
 # the pushbutton phase
 class Button(PhaseThread):
-    def __init__(self, component_state, component_rgb, gamephase, target, color, timer, name="Button"):
+    def __init__(self, component_state, component_rgb, gamephase, target, colors, timer, name="Button"):
         super().__init__(name, component_state, target)
         # the default value is False/Released
         self._value = False
@@ -328,7 +328,8 @@ class Button(PhaseThread):
         #0 = red
         #1 = green
         #2 = blue
-        self._color = color[0]
+        self._cList = colors
+        self._color = cList[0]
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
@@ -341,11 +342,11 @@ class Button(PhaseThread):
         #self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
             # get the pushbutton's state
-            self._color = color[0]
+            self._colors = self._cList[0]
             sleep(0.1)
-            self._color = color[1]
+            self._color = self._cList[1]
             sleep(0.1)
-            self._color = color[2]
+            self._color = self._cList[2]
             self._value = self._component.value
             # it is pressed
             if (self._value):
