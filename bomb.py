@@ -29,7 +29,7 @@ class BombPhase:
     #method to setup the phases
     def setup_phases(self):
         #setup the timer thread
-        self._timer = Timer(component_7seg, COUNTDOWN)
+        self._timer = Timer(component_7seg, self._gamephase, COUNTDOWN)
         #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
         self._gui.setTimer(self._timer)
         #setup the keypad thread
