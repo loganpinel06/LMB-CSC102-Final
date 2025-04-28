@@ -11,7 +11,8 @@ Matt's Ideas for Trivia in Lebron Phases:
             Career Points with Cavs O/U 24,000? Under
             Career Assists with Cavs O/U 6000? Over
             Career Rebounds with Cavs Over/Under 6000? Over
-                Parlay Answer: UOO or 011
+            Career Blocks/Steals with Cavs Over/Under 2000? Over
+                Parlay Answer: UOOO or 0111
         Answer with a Number Questions:
             Year Drafted: 2003
             Career High with Cavs? 57
@@ -27,7 +28,8 @@ Matt's Ideas for Trivia in Lebron Phases:
             Career Points with Heat O/U 8000? Under
             Career Assists with Heat O/U 2000? Under
             Career Rebounds with Heat O/U 2000? Over
-                Parlay Answer: UUO or 001
+            Career Blocks/Steals with Heat O/U 700? Over
+                Parlay Answer: UUOO or 0011
         Answer with a Number Questions:
             What year did Lebron and the Heat win their first Chip? 2012
             Career High with Heat? 61
@@ -43,7 +45,8 @@ Matt's Ideas for Trivia in Lebron Phases:
             Career Points with the Lakers O/U 11,000? Over
             Career Assists with the Lakers O/U 3000? Over
             Career Rebounds with the Lakers O/U 3000? Under
-                Parlay Answer: OOU or 110
+            Career Blocks/Steals with the Lakers O/U 500? Over
+                Parlay Answer: OOUO or 1101
         Answer with a Number Questions:
             What year did Lebron win a chip with the Lakers? 2020
             Career High with Lebron? 56
@@ -78,4 +81,5 @@ Matt's Ideas for Trivia in Lebron Phases:
         -Toggle 2 = 1
         -Toggle 3 = 1
         -Toggle 4 = 0
+    -Parlay Questions for Each Phase
     
