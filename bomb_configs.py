@@ -197,11 +197,11 @@ button_colors = ["R", "G", "B"]
 # appropriately set the target (R is None)
 button_target = None
 # G is the first numeric digit in the serial number
-if (button_color == "G"):
-    button_target = [ n for n in serial if n.isdigit() ][0]
+#if (button_color == "G"):
+    #button_target = [ n for n in serial if n.isdigit() ][0]
 # B is the last numeric digit in the serial number
-elif (button_color == "B"):
-    button_target = [ n for n in serial if n.isdigit() ][-1]
+#elif (button_color == "B"):
+    #button_target = [ n for n in serial if n.isdigit() ][-1]
 
 if (DEBUG):
     print(f"Serial number: {serial}")
