@@ -325,6 +325,9 @@ class Button(PhaseThread):
         # we need the pushbutton's RGB pins to set its color
         self._rgb = component_rgb
         # the pushbutton's randomly selected LED color
+        #0 = red
+        #1 = green
+        #2 = blue
         self._color = color[0]
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
