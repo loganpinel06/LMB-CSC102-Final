@@ -329,7 +329,7 @@ class Button(PhaseThread):
         #1 = green
         #2 = blue
         self._cList = colors
-        self._color = cList[0]
+        self._color = self._cList[0]
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
