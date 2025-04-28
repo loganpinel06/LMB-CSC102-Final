@@ -5,6 +5,38 @@ Matt's Ideas for Trivia in Lebron Phases:
 3 puzzles for button
 1 puzzle at end for keypad 
 
+Game Phase 1: Cavs Phase
+
+T/F and O/U Questions
+Drafted by them? True
+Career Points with Cavs O/U 23,500? Under
+Career Assists with Cavs O/U 6000? Over
+Career Rebounds with Cavs Over/Under 6000? Over
+Won a chip with Cavs? True
+Rookie of the year with Cavs? True
+
+
+
+
+Game Phase 2: Heat Phase 
+Career Points
+
+
+
+
+
+
+
+
+
+
+
+
+-Phases Ideas
+    -Cavs, Heat, Lakers
+    -Red, Green, Blue (Basic)
+    -Points, Assists, Rebounds
+
 -Wires
     -TBD
 
