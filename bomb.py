@@ -1,22 +1,22 @@
 #################################
-# CSC 102 Defuse the Bomb Project
-# Main program
-# Team: 
+#CSC 102 Defuse the Bomb Project
+#Main program
+#Team: 
 #################################
 
-# import the configs
+#import the configs
 from bomb_configs import *
-# import the phases
+#import the phases
 from bomb_phases import *
 
 #create a class for the BombPhases
 #this will act as a parent class to run all bomb phases but will allow us to do this three times
-#for each color phase
+#for each game phase
 class BombPhase:
-    #constructor passing in the colorphase and the gui element
-    def __init__(self, colorphase, gui):
+    #constructor passing in the gamephase and the gui element
+    def __init__(self, gamephase, gui):
         #initialize instance variables
-        self._colorphase = colorphase
+        self._gamephase = gamephase
         self._gui = gui
         self._timer = None
         self._keypad = None
@@ -35,7 +35,7 @@ class BombPhase:
         #setup the keypad thread
         self._keypad = Keypad(component_keypad, keypad_target)
         #setup the jumper wires thread
-        self._wires = Wires(component_wires, wires_target)
+        self._wires = Wires(component_wires, self._gamephase, wires_target)
         #setup the pushbutton thread
         self._button = Button(component_button_state, component_button_RGB, button_target, button_color, self._timer)
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
@@ -52,92 +52,98 @@ class BombPhase:
 
     #method to check the phases
     def check_phases(self):
-        # check the timer
+        #check the timer
         if (self._timer._running):
-            # update the GUI
-            #might not need to update the colorphase but here if needed
-            #self._gui._lcolorphase["text"] = f"Color Phase: {self._colorphase}"
+            #update the GUI
             self._gui._ltimer["text"] = f"Time left: {self._timer}"
         else:
-            # the countdown has expired -> explode!
-            # turn off the bomb and render the conclusion GUI
+            #the countdown has expired -> explode!
+            #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(100, self._gui.conclusion, False)
-            # don't check any more phases
+            #don't check any more phases
             return
-        # check the keypad
+        #check the keypad
         if (self._keypad._running):
-            # update the GUI
+            #update the GUI
             self._gui._lkeypad["text"] = f"Combination: {self._keypad}"
-            # the phase is defused -> stop the thread
+            #the phase is defused -> stop the thread
             if (self._keypad._defused):
                 self._keypad._running = False
                 self._active_phases -= 1
-            # the phase has failed -> strike
+            #the phase has failed -> strike
             elif (self._keypad._failed):
                 self.strike()
-                # reset the keypad
+                #reset the keypad
                 self._keypad._failed = False
                 self._keypad._value = ""
-        # check the wires
+        #check the wires
         if (self._wires._running):
-            # update the GUI
+            #update the GUI
             self._gui._lwires["text"] = f"Wires: {self._wires}"
-            # the phase is defused -> stop the thread
+            #the phase is defused -> stop the thread
             if (self._wires._defused):
                 self._wires._running = False
                 self._active_phases -= 1
-            # the phase has failed -> strike
+            #the phase has failed -> strike
             elif (self._wires._failed):
                 self.strike()
-                # reset the wires
+                #reset the wires
                 self._wires._failed = False
-        # check the button
+        #check the button
         if (self._button._running):
-            # update the GUI
+            #update the GUI
             self._gui._lbutton["text"] = f"Button: {self._button}"
-            # the phase is defused -> stop the thread
+            #the phase is defused -> stop the thread
             if (self._button._defused):
                 self._button._running = False
                 self._active_phases -= 1
-            # the phase has failed -> strike
+            #the phase has failed -> strike
             elif (self._button._failed):
                 self.strike()
-                # reset the button
+                #reset the button
                 self._button._failed = False
-        # check the toggles
+        #check the toggles
         if (self._toggles._running):
-            # update the GUI
+            #update the GUI
             self._gui._ltoggles["text"] = f"Toggles: {self._toggles}"
-            # the phase is defused -> stop the thread
+            #the phase is defused -> stop the thread
             if (self._toggles._defused):
                 self._toggles._running = False
                 self._active_phases -= 1
-            # the phase has failed -> strike
+            #the phase has failed -> strike
             elif (self._toggles._failed):
                 self.strike()
-                # reset the toggles
+                #reset the toggles
                 self._toggles._failed = False
     
-        # note the strikes on the GUI
+        #note the strikes on the GUI
         self._gui._lstrikes["text"] = f"Strikes left: {self._strikes_left}"
-        # too many strikes -> explode!
+        #too many strikes -> explode!
         if (self._strikes_left == 0):
-            # turn off the bomb and render the conclusion GUI
+            #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(1000, self._gui.conclusion, False)
-            # stop checking phases
+            #stop checking phases
             return
     
-        # the bomb has been successfully defused!
-        if (self._active_phases == 0):
-            # turn off the bomb and render the conclusion GUI
+        #the bomb has been successfully defused!
+        #bomb will only fully shut off after the lakers game phase
+        if (self._active_phases == 0 and self._gamephase == "Lakers"):
+            #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(100, self._gui.conclusion, True)
-            # stop checking phases
+            #stop checking phases
+            return
+        
+        #game phase has been successfully defused!
+        if (self._active_phases == 0 and self._gamephase != "Lakers"):
+            #start the next game phase
+            start_next_phase(self)
+            #stop checking phases
             return
     
-        # check the phases again after a slight delay
+        #check the phases again after a slight delay
         self._gui.after(100, self.check_phases)
 
     #method to setup strikes
@@ -146,6 +152,7 @@ class BombPhase:
         self._strikes_left -= 1
 
     #method to setup turn off
+    #this will also be used to stop a phase when changing the game phases
     def turn_off(self):
         #stop all threads
         self._timer._running = False
@@ -160,43 +167,62 @@ class BombPhase:
         #turn off the pushbutton's LED
         for pin in self._button._rgb:
             pin.value = True
-
+        
 #main method
 #bootup method
 def bootup(phase, n=0):
-    # if we're not animating (or we're at the end of the bootup text)
+    #if we're not animating (or we're at the end of the bootup text)
     if (not ANIMATE or n == len(boot_text)):
-        # if we're not animating, render the entire text at once (and don't process \x00)
+        #if we're not animating, render the entire text at once (and don't process \x00)
         if (not ANIMATE):
             phase._gui._lscroll["text"] = boot_text.replace("\x00", "")
-        # configure the remaining GUI widgets
+        #configure the remaining GUI widgets
         phase._gui.setup()
-        # setup the phase threads, execute them, and check their statuses
+        #setup the phase threads, execute them, and check their statuses
         if (RPi):
             phase.setup_phases()
             phase.check_phases()
-    # if we're animating
+    #if we're animating
     else:
-        # add the next character (but don't render \x00 since it specifies a longer pause)
+        #add the next character (but don't render \x00 since it specifies a longer pause)
         if (boot_text[n] != "\x00"):
             phase._gui._lscroll["text"] += boot_text[n]
 
-        # scroll the next character after a slight delay (\x00 is a longer delay)
+        #scroll the next character after a slight delay (\x00 is a longer delay)
         phase._gui.after(25 if boot_text[n] != "\x00" else 750, bootup, phase, n + 1)
+
+#method to start the next game phase
+def start_next_phase(current_phase):
+    #stop the current phase
+    current_phase.turn_off()
+    #conclude the current game phase
+    current_phase._gui.after(100, current_phase._gui.gamephaseconclusion, True)
+    #destroy the LCD GUI after 5 seconds
+    current_phase._gui.after(5000, current_phase._gui.destroy)
+    
+    #start the next game phase
+    if (current_phase == cavs_phase):
+        #bootup the heat phase
+        window.after(5000, bootup, heat_phase)
+    elif (current_phase == heat_phase):
+        #bootup the lakers phase
+        window.after(5000, bootup, lakers_phase)
+
 
 #initialize the LCD GUI
 window = Tk()
 
-#create objects of the BombPhase class for each color phase
-red_phase=BombPhase("red", Lcd(window, "red"))
-green_phase=BombPhase("green", Lcd(window, "green"))
+#create objects of the BombPhase class for each game phase
+cavs_phase=BombPhase("Cavs", Lcd(window, "Cavs"))
+heat_phase=BombPhase("Heat", Lcd(window, "Heat"))
+lakers_phase=BombPhase("Lakers", Lcd(window, "Lakers"))
 
-# initialize the bomb strikes and active phases (i.e., not yet defused)
+#initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
 
-# "boot" the bomb
-window.after(1000, bootup, green_phase)
+#"boot" the bomb
+window.after(1000, bootup, cavs_phase)
 
-# display the LCD GUI
+#display the LCD GUI
 window.mainloop()
