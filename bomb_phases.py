@@ -379,13 +379,13 @@ class Button(PhaseThread):
                     # note that the pushbutton was released
                     self._pressed = False
             rand = random.randint(0, 100)
-            if rand >= 90:
+            if rand >= 99:
                 i = 1
-            elif rand <=25:
+            elif rand <=5:
                 i = 2
             else:
                 i = 0
-            if wasGreen and count<3:
+            if wasGreen and count<5:
                 count+=1
                 i = 1
             else:
