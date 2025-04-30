@@ -338,11 +338,14 @@ class Button(PhaseThread):
         self._running = True
         # set the RGB LED color
         while (self._running):
+            self._rgb[2].value = True
             # get the pushbutton's state
             self._rgb[0].value = False #if self._color == "R" else True
             sleep(0.1)
+            self._rgb[0].value = True
             self._rgb[1].value = False #if self._color == "G" else True
             sleep(0.1)
+            self._rgb[1].value = True
             self._rgb[2].value = False #if self._color == "B" else True
             self._value = self._component.value
             # it is pressed
