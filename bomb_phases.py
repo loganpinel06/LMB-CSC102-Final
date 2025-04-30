@@ -362,7 +362,7 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, gamephase, target, name="Toggles"):
+    def __init__(self, component, gamephase, target="0111", name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
         #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
@@ -379,20 +379,14 @@ class Toggles(PhaseThread):
         while (self._running):
             # get the toggle switch values (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component])
-            
             #call global variables
             global ADD, SET
-            #testing
-            if self._value == "1111":
-                self._defused = True
-            if self._value == "1000":
-                ADD = 30
-            if self._value == "0001":
-                SET = 360
             
+            #checks if self._value and self._target are the same, defusing the toggles phase
+            if (self._value == self._target):
+                self._defused = True        
             sleep(0.1)
             
-
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
