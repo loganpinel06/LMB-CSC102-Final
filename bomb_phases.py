@@ -320,18 +320,30 @@ class Button(PhaseThread):
         # we need the pushbutton's RGB pins to set its color
         self._rgb = component_rgb
         # the pushbutton's randomly selected LED color
-        self._color = color
+        self._colorList = color
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
+
+        #create a variable i to hold the index for the list of colors so we can change the color every loop
+        self._i = 0
 
     # runs the thread
     def run(self):
         self._running = True
         # set the RGB LED color
-        self._rgb[0].value = False if self._color == "R" else True
-        self._rgb[1].value = False if self._color == "G" else True
-        self._rgb[2].value = False if self._color == "B" else True
+        #self._rgb[0].value = False if self._color == "R" else True
+        #self._rgb[1].value = False if self._color == "G" else True
+        #self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
+            #check if the variable i is greater than the length of the color list
+            if self._i >= len(self._colorList):
+                #if it is, reset the variable i to 0
+                self._i = 0
+            #set the color of the pushbutton to the color at the index i
+            self._rgb[0].value = False if self._colorList[self._i] == "R" else True
+            self._rgb[1].value = False if self._colorList[self._i] == "G" else True
+            self._rgb[2].value = False if self._colorList[self._i] == "B" else True
+
             # get the pushbutton's state
             self._value = self._component.value
             # it is pressed
@@ -351,7 +363,10 @@ class Button(PhaseThread):
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
-            sleep(0.1)
+            #incremement the variable i by 1
+            self._i += 1
+            #wait 0.5 seconds before the next loop
+            sleep(0.5)
 
     # returns the pushbutton's state as a string
     def __str__(self):
