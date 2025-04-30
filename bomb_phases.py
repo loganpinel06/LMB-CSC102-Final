@@ -325,6 +325,8 @@ class Button(PhaseThread):
         self._pressed = False
         # we need the pushbutton's RGB pins to set its color
         self._rgb = component_rgb
+        #set gamephase
+        self._gamephase = gamephase
         # the pushbutton's randomly selected LED color
         #0 = red
         #1 = green
@@ -385,19 +387,19 @@ class Button(PhaseThread):
                 i = 2
             else:
                 i = 0
-            if gamephase == "Cavs":
+            if self._gamephase == "Cavs":
                 if wasGreen and count<5:
                     count+=1
                     i = 1
                 else:
                     count = 0
-            if gamephase == "Lakers":
+            if self._gamephase == "Lakers":
                 if wasGreen and count<2:
                     count+=1
                     i = 1
                 else:
                     count = 0
-            if gamephase == "Heat":
+            if self._gamephase == "Heat":
                 if wasGreen and count<3:
                     count+=1
                     i = 1
