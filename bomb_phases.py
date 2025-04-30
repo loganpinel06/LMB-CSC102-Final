@@ -367,7 +367,7 @@ class Button(PhaseThread):
                     # for R, nothing else is needed
                     # for G or B, a specific digit must be in the timer (sec) when released
                     #             if (not self._target or self._target in self._timer._sec):
-                    if self._color = "G":
+                    if self._color == "G":
                         self._defused = False
                         #REMEMBER TO CHANGE BACK TO TRUE
                     else:
