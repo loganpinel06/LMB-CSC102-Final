@@ -385,11 +385,24 @@ class Button(PhaseThread):
                 i = 2
             else:
                 i = 0
-            if wasGreen and count<5:
-                count+=1
-                i = 1
-            else:
-                count = 0
+            if gamephase == "Cavs":
+                if wasGreen and count<5:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
+            if gamephase == "Lakers":
+                if wasGreen and count<2:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
+            if gamephase == "Heat":
+                if wasGreen and count<3:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
             sleep(0.1)
 
     # returns the pushbutton's state as a string
