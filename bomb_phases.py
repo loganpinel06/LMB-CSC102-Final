@@ -372,7 +372,7 @@ class Button(PhaseThread):
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
-            rand = randint(0, 10)
+            rand = random.randint(0, 10)
             if rand == 10:
                 i = 1
             if rand <=3:
