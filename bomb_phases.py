@@ -381,7 +381,7 @@ class Button(PhaseThread):
                 i = 2
             else:
                 i = 0
-            sleep(0.1)
+            sleep(0.5)
 
     # returns the pushbutton's state as a string
     def __str__(self):
