@@ -337,7 +337,7 @@ class Button(PhaseThread):
     # runs the thread
     def run(self):
         i = 0
-        wasGreen = False
+        wasGreen = True
         self._running = True
         # set the RGB LED color
         while (self._running):
