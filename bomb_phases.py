@@ -13,6 +13,7 @@ from threading import Thread
 from time import sleep
 import os
 import sys
+import random
 #create global variables to change clock
 ADD = 0
 SET = 0
