@@ -1,5 +1,45 @@
 Matt's Ideas for Trivia in Lebron Phases:
 
+Cavs Phase
+-Wires Puzzle
+-Toggles Puzzle
+    -Parlay with Questions
+        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+         statistics with the Cleveland Cavaliers. (Over=1, Under=0)
+            -Career Points with Cavs O/U 24,000? Under (0)
+            -Career Assists with Cavs O/U 6000? Over (1)
+            -Career Rebounds with Cavs Over/Under 6000? Over (1)
+            -Career Blocks/Steals with Cavs Over/Under 2000? Over (1)
+        -Final Answer: 0111 (Parlay is Under, Over, Over, Over)
+-Button Puzzle
+
+Heat Phase
+-Wires Puzzle
+-Toggles Puzzle
+    -Parlay with Questions
+        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+         statistics with the Miami Heat. (Over=1, Under=0)
+            Career Points with Heat O/U 8000? Under (0)
+            Career Assists with Heat O/U 2000? Under (0)
+            Career Rebounds with Heat O/U 2000? Over (1)
+            Career Blocks/Steals with Heat O/U 700? Over (1)
+        -Final Answer: 0011 (Parlay is Under, Under, Over, Over)
+-Button Puzzle
+
+Lakers Phase
+-Wires Puzzle
+-Toggles Puzzle
+    -Parlay with Questions
+        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+         statistics with the Miami Heat. (Over=1, Under=0)
+            Career Points with the Lakers O/U 11,000? Over (1)
+            Career Assists with the Lakers O/U 3000? Over (1)
+            Career Rebounds with the Lakers O/U 3000? Under (1)
+            Career Blocks/Steals with the Lakers O/U 500? Over (1)
+        -Final Answer: 1101 (Parlay is Over, Over, Under, Over)
+-Button Puzzle
+-Final Keypad Combination
+
 -Phases/Trivia
     Game Phase 1: Cavs Phase
         T/F Questions:
@@ -83,3 +123,9 @@ Matt's Ideas for Trivia in Lebron Phases:
         -Toggle 4 = 0
     -Parlay Questions for Each Phase
     
+
+
+
+Keypad:
+
+displays a teamate and the keypad is a rotation cipher of teammates name
