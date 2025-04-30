@@ -335,22 +335,23 @@ class Button(PhaseThread):
 
     # runs the thread
     def run(self):
+        i = 0
         self._running = True
         # set the RGB LED color
         while (self._running):
             self._rgb[2].value = True
             self._rgb[1].value = True
-            # get the pushbutton's state
-            self._rgb[0].value = False #if self._color == "R" else True
-            self._color = "R"
-            sleep(0.1)
             self._rgb[0].value = True
-            self._rgb[1].value = False #if self._color == "G" else True
-            self._color = "G"
-            sleep(1)
-            self._rgb[1].value = True
-            self._rgb[2].value = False #if self._color == "B" else True
-            self._color = "B"
+            # get the pushbutton's state
+            if i == 0:
+                self._rgb[0].value = False #if self._color == "R" else True
+                self._color = "R"
+            if i == 1:
+                self._rgb[1].value = False #if self._color == "G" else True
+                self._color = "G"
+            if i == 2:
+                self._rgb[2].value = False #if self._color == "B" else True
+                self._color = "B"
             self._value = self._component.value
             # it is pressed
             if (self._value):
@@ -371,7 +372,14 @@ class Button(PhaseThread):
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
-            sleep(0.1)
+            rand = randint(0, 10)
+            if rand == 10:
+                i = 1
+            if rand <=3:
+                i = 2
+            else:
+                i = 0
+            sleep(1)
 
     # returns the pushbutton's state as a string
     def __str__(self):
