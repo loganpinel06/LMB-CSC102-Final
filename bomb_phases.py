@@ -337,6 +337,7 @@ class Button(PhaseThread):
     # runs the thread
     def run(self):
         i = 0
+        wasGreen = False
         self._running = True
         # set the RGB LED color
         while (self._running):
@@ -350,7 +351,7 @@ class Button(PhaseThread):
             if i == 1:
                 self._rgb[1].value = False #if self._color == "G" else True
                 self._color = "G"
-
+                wasGreen = True
             if i == 2:
                 self._rgb[2].value = False #if self._color == "B" else True
                 self._color = "B"
@@ -367,7 +368,7 @@ class Button(PhaseThread):
                     # for R, nothing else is needed
                     # for G or B, a specific digit must be in the timer (sec) when released
                     #             if (not self._target or self._target in self._timer._sec):
-                    if self._color == "G":
+                    if wasGreen:
                         self._defused = False
                         #REMEMBER TO CHANGE BACK TO TRUE
                     else:
