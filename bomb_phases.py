@@ -362,9 +362,16 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, name="Toggles"):
+    def __init__(self, component, gamephase, target, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
+        #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
+        if gamephase == "Cavs":
+            self._target = "0111"
+        if gamephase == "Heat":
+            self._target = "0011"
+        if gamephase == "Lakers":
+            self._target = "1101"
         
     # runs the thread
     def run(self):
