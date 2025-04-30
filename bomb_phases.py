@@ -342,7 +342,7 @@ class Button(PhaseThread):
         #self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
             # get the pushbutton's state
-            self._colors = self._cList[0]
+            self._color = self._cList[0]
             sleep(0.1)
             self._color = self._cList[1]
             sleep(0.1)
