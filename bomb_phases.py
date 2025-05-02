@@ -51,25 +51,25 @@ class Lcd(Frame):
     def setup(self):
         # the timer
         self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
-        self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
+        self._ltimer.grid(row=4, column=0, columnspan=3, sticky=W)
         # the keypad passphrase
         self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
-        self._lkeypad.grid(row=2, column=0, columnspan=3, sticky=W)
+        self._lkeypad.grid(row=3, column=1, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Wires phase: ")
-        self._lwires.grid(row=3, column=0, columnspan=3, sticky=W)
+        self._lwires.grid(row=2, column=1, columnspan=3, sticky=W)
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Button phase: ")
-        self._lbutton.grid(row=4, column=0, columnspan=3, sticky=W)
+        self._lbutton.grid(row=3, column=0, columnspan=3, sticky=W)
         # the toggle switches status
         self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
-        self._ltoggles.grid(row=5, column=0, columnspan=2, sticky=W)
+        self._ltoggles.grid(row=2, column=0, columnspan=2, sticky=W)
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
-        self._lstrikes.grid(row=5, column=2, sticky=W)
+        self._lstrikes.grid(row=4, column=1, sticky=W)
         #current game phase
         self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
-        self._lgamephase.grid(row=1, column=2, sticky=W)
+        self._lgamephase.grid(row=1, column=0, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)
