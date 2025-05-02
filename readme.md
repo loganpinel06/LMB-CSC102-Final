@@ -1,81 +1,71 @@
 Matt's Ideas for Trivia in Lebron Phases:
 
--Phases/Trivia
-    Game Phase 1: Cavs Phase
-        T/F Questions:
-            Lebron is from Cincinnati? False
-            Drafted by them? True
-            Rookie of the year with Cavs? True
-                Two Truths and a Lie?
-        O/U Questions:
-            Career Points with Cavs O/U 24,000? Under
-            Career Assists with Cavs O/U 6000? Over
-            Career Rebounds with Cavs Over/Under 6000? Over
-                Parlay Answer: UOO or 011
-        Answer with a Number Questions:
-            Year Drafted: 2003
-            Career High with Cavs? 57
-            Year won finals? 2016
+Cavs Phase
+-Wires Puzzle
+    -Career High Questions
+        -How Old Was Lebron When He Was Drafted?
+            -18 (Final Answer: 10010)
+-Toggles Puzzle
+    -Parlay with Questions
+        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+         statistics with the Cleveland Cavaliers. (Over=1, Under=0)
+            -Career Points with Cavs O/U 24,000? Under (0)
+            -Career Assists with Cavs O/U 6000? Over (1)
+            -Career Rebounds with Cavs Over/Under 6000? Over (1)
+            -Career Blocks/Steals with Cavs Over/Under 2000? Over (1)
+        -Final Answer: 0111 (Parlay is Under, Over, Over, Over)
+-Button Puzzle
+    -Have to Release When Green As If You Were Playing 2k
+-Keypad Puzzle
+    -What Year Did Lebron Average 28.4 pts, 7.6 rebs, and 7.2 asts?
+        -Final Answer: 2009
 
-    Game Phase 2: Heat Phase 
-        T/F Questions:
-            Lebron won an MVP with the Heat? True
-            Lebron won a chip with the Heat? True
-            Lebron won a DPOY with the Heat? False
-                Two Truths and a Lie?
-        O/U Questions:
-            Career Points with Heat O/U 8000? Under
-            Career Assists with Heat O/U 2000? Under
-            Career Rebounds with Heat O/U 2000? Over
-                Parlay Answer: UUO or 001
-        Answer with a Number Questions:
-            What year did Lebron and the Heat win their first Chip? 2012
-            Career High with Heat? 61
-            Lebron made the All-Star team how many times with the Heat? 4
+Heat Phase
+-Wires Puzzle
+    -How Many Championships Did Lebron Win With The Heat?
+        -2 (Final Answer: 00010)
+-Toggles Puzzle
+    -Parlay with Questions
+        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+         statistics with the Miami Heat. (Over=1, Under=0)
+            Career Points with Heat O/U 8000? Under (0)
+            Career Assists with Heat O/U 2000? Under (0)
+            Career Rebounds with Heat O/U 2000? Over (1)
+            Career Blocks/Steals with Heat O/U 700? Over (1)
+        -Final Answer: 0011 (Parlay is Under, Under, Over, Over)
+-Button Puzzle
+    -Have to Release When Green As If You Were Playing 2k
+-Keypad Puzzle
+    -What Year Did Lebron Average 27.1 pts, 6.9 rebs, and 6.3 asts?
+        -Final Answer: 2014
 
-    Game Phase 3: Lakers Phase
-        T/F Questions:
-            Lebron still plays for the Lakers? True
-            Lebron is the first to play in the NBA alongside his son? True
-            Lebron currently wears number "6" with the Lakers? False
-                Two Truths and a Lie?
-        O/U Questions:
-            Career Points with the Lakers O/U 11,000? Over
-            Career Assists with the Lakers O/U 3000? Over
-            Career Rebounds with the Lakers O/U 3000? Under
-                Parlay Answer: OOU or 110
-        Answer with a Number Questions:
-            What year did Lebron win a chip with the Lakers? 2020
-            Career High with Lebron? 56
-            How many seasons in a row has Lebron averaged 25+ points? 20
+Lakers Phase
+-Wires Puzzle
+    -Lebron Has Averaged 25+ Points For ___ Many Seasons?
+        -Final Answer: 20 (10100)
+-Toggles Puzzle
+    -Parlay with Questions
+        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+         statistics with the Miami Heat. (Over=1, Under=0)
+            Career Points with the Lakers O/U 11,000? Over (1)
+            Career Assists with the Lakers O/U 3000? Over (1)
+            Career Rebounds with the Lakers O/U 3000? Under (1)
+            Career Blocks/Steals with the Lakers O/U 500? Over (1)
+        -Final Answer: 1101 (Parlay is Over, Over, Under, Over)
+-Button Puzzle
+    -Have to Release When Green As If You Were Playing 2k
+-Keypad Puzzle
+    -What Year Did Lebron Average 26.2 pts, 9.9 rebs, and 8.3 asts?
+        -Final Answer: 2020
 
-    Miscellaneous Questions:
-        -What famous Drake song was created for Lebron James? Forever
-        -How many MVP's does Lebron have in his career? 4
-        -How many Gold Medals does Lebron have? 2
-        -As of 2025, how many seasons has Lebron played in the NBA? 22
-        -Did Lebron play in the SEC division in College? No
-        -Play-by-Play Heat Finals Win Questions:
-            -What player missed a 3-pointer to almost win the Finals with Lebron on the Heat (Last Name)? Wade
-            -What player grabbed a famous rebound to help Lebron win the Finals (Last Name)? Bosh
-            -What player hit a famous 3-pointer to help Lebron win the Finals (Last Name)? Allen
-        
--Keypad
-    -Final Keypad Combinations
-        -Password: 2003 (year bron was drafted)
-        -Password: DNURQ (Akron with a 23 rotation cipher)
-        -Password: 416B726F6E (Akron in hexidecimal) 
 
--Button
-    -Shooting Free-Throws
-        -Must press when light turns green (ex. in 2k when you green a shot)
-            -If you miss, take time away, if you make it, either add time or defuse
-                -Maybe need to hit 2 shots (ex. late game free throw shots?)
 
--Toggles
-    -Binary code for Lebron's jersey number on the heat (6)
-        -Toggle 1 = 0
-        -Toggle 2 = 1
-        -Toggle 3 = 1
-        -Toggle 4 = 0
-    
+SOUND IDEAS
+-If bomb explodes, play booboooboooboooooo by Lebron
+-If you get a strike, play "COME ON MANNN" by Lebron
+-If you hit the button and make the shot, play a swoosh audio
+
+
+Final Phase
+-Keypad Combination
+

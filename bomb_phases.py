@@ -242,7 +242,12 @@ class Keypad(PhaseThread):
         # the default value is an empty string
         self._value = ""
         #need to check the genKeypadCombo in bomb_configs later
-        self._target = "1234"
+        if gamephase == "Cavs":
+            self._target = "2009"
+        elif gamephase == "Heat":
+            self._target = "2014"
+        elif gamephase == "Lakers":
+            self._target = "2020"
 
     # runs the thread
     def run(self):
@@ -280,17 +285,17 @@ class Keypad(PhaseThread):
 # the jumper wires phase
 class Wires(PhaseThread):
     #set the target equal to the correct combination
-    def __init__(self, component, gamephase, target="10001", name="Wires"):
+    def __init__(self, component, gamephase, target, name="Wires"):
         super().__init__(name, component, target)
         #set the value of the wires to an empty string
         self._value = ""
-        #set target based on the gamephase
+        #setting new targets based on the gamephase
         if gamephase == "Cavs":
-            self._target = "10001"
+            self._target = "10010"
         elif gamephase == "Heat":
-            self._target = "00100"
+            self._target = "00010"
         elif gamephase == "Lakers":
-            self._target = "01010"
+            self._target = "10100"
 
     # runs the thread
     def run(self):
@@ -427,6 +432,13 @@ class Toggles(PhaseThread):
     def __init__(self, component, gamephase, target, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
+        #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
+        if gamephase == "Cavs":
+            self._target = "0111"
+        elif gamephase == "Heat":
+            self._target = "0011"
+        elif gamephase == "Lakers":
+            self._target = "1101"
         
     # runs the thread
     def run(self):
@@ -434,20 +446,14 @@ class Toggles(PhaseThread):
         while (self._running):
             # get the toggle switch values (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component])
-            
             #call global variables
             global ADD, SET
-            #testing
-            if self._value == "1111":
-                self._defused = True
-            if self._value == "1000":
-                ADD = 30
-            if self._value == "0001":
-                SET = 360
             
+            #checks if self._value and self._target are the same, defusing the toggles phase
+            if (self._value == self._target):
+                self._defused = True        
             sleep(0.1)
             
-
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
