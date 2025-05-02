@@ -15,7 +15,7 @@ from bomb_phases import *
 class BombPhase:
     #constructor passing in the gamephase and the gui element
     def __init__(self, gamephase, gui):
-        #initialize instance variables
+        #initialize instance variables for the main bomb
         self._gamephase = gamephase
         self._gui = gui
         self._timer = None
@@ -25,6 +25,20 @@ class BombPhase:
         self._toggles = None
         self._active_phases = NUM_PHASES
         self._strikes_left = NUM_STRIKES
+
+        #SETUP TEXT VARIABLES FOR EACH PHASE FOR BOOTUP
+
+        #setup the bootup text in bomb.py so we can use the gampphase variable to change the hints throughout the game
+        self._boot_text = f"Booting LEBOMB...\n\x00\x00"\
+                        f"*Kernel v3.1.4-159 loaded.\n"\
+                        f"Initializing subsystems...\n\x00"\
+                        f"*System model: 102BOMBv4.2\n"\
+                        f"*Serial number: {serial}\n"\
+                        f"Encrypting keypad...\n\x00"\
+                        f"*Keyword: {cipher_keyword}; key: {rot}\n"\
+                        f"*{' '.join(ascii_uppercase)}\n"\
+                        f"*{' '.join([str(n % 10) for n in range(26)])}\n"\
+                        f"Rendering phases...\x00"
 
     #method to setup the phases
     def setup_phases(self):
@@ -207,7 +221,6 @@ def start_next_phase(current_phase):
     elif (current_phase == heat_phase):
         #bootup the lakers phase
         window.after(5000, bootup, lakers_phase)
-
 
 #initialize the LCD GUI
 window = Tk()
