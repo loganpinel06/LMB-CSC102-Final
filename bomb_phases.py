@@ -50,25 +50,25 @@ class Lcd(Frame):
     def setup(self):
         # the timer
         self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
-        self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
+        self._ltimer.grid(row=4, column=0, columnspan=3, sticky=W)
         # the keypad passphrase
         self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
-        self._lkeypad.grid(row=2, column=0, columnspan=3, sticky=W)
+        self._lkeypad.grid(row=3, column=1, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Wires phase: ")
-        self._lwires.grid(row=3, column=0, columnspan=3, sticky=W)
+        self._lwires.grid(row=2, column=1, columnspan=3, sticky=W)
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Button phase: ")
-        self._lbutton.grid(row=4, column=0, columnspan=3, sticky=W)
+        self._lbutton.grid(row=3, column=0, columnspan=3, sticky=W)
         # the toggle switches status
         self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
-        self._ltoggles.grid(row=5, column=0, columnspan=2, sticky=W)
+        self._ltoggles.grid(row=2, column=0, columnspan=2, sticky=W)
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
-        self._lstrikes.grid(row=5, column=2, sticky=W)
+        self._lstrikes.grid(row=4, column=1, sticky=W)
         #current game phase
         self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
-        self._lgamephase.grid(row=1, column=2, sticky=W)
+        self._lgamephase.grid(row=1, column=0, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)
@@ -320,18 +320,30 @@ class Button(PhaseThread):
         # we need the pushbutton's RGB pins to set its color
         self._rgb = component_rgb
         # the pushbutton's randomly selected LED color
-        self._color = color
+        self._colorList = color
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
+
+        #create a variable i to hold the index for the list of colors so we can change the color every loop
+        self._i = 0
 
     # runs the thread
     def run(self):
         self._running = True
         # set the RGB LED color
-        self._rgb[0].value = False if self._color == "R" else True
-        self._rgb[1].value = False if self._color == "G" else True
-        self._rgb[2].value = False if self._color == "B" else True
+        #self._rgb[0].value = False if self._color == "R" else True
+        #self._rgb[1].value = False if self._color == "G" else True
+        #self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
+            #check if the variable i is greater than the length of the color list
+            if self._i >= len(self._colorList):
+                #if it is, reset the variable i to 0
+                self._i = 0
+            #set the color of the pushbutton to the color at the index i
+            self._rgb[0].value = False if self._colorList[self._i] == "R" else True
+            self._rgb[1].value = False if self._colorList[self._i] == "G" else True
+            self._rgb[2].value = False if self._colorList[self._i] == "B" else True
+
             # get the pushbutton's state
             self._value = self._component.value
             # it is pressed
@@ -351,7 +363,10 @@ class Button(PhaseThread):
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
-            sleep(0.1)
+            #incremement the variable i by 1
+            self._i += 1
+            #wait 0.5 seconds before the next loop
+            sleep(0.5)
 
     # returns the pushbutton's state as a string
     def __str__(self):

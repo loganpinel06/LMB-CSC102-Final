@@ -192,7 +192,7 @@ serial, toggles_target, wires_target = genSerial()
 keyword, cipher_keyword, rot, keypad_target, passphrase = genKeypadCombination()
 
 # generate the color of the pushbutton (which determines how to defuse the phase)
-button_color = choice(["R", "G", "B"])
+button_color = ["R", "G", "B"]
 # appropriately set the target (R is None)
 button_target = None
 # G is the first numeric digit in the serial number
@@ -210,13 +210,13 @@ if (DEBUG):
     print(f"Button target: {button_target}")
 
 # set the bomb's LCD bootup text
-boot_text = f"Booting...\n\x00\x00"\
-            f"*Kernel v3.1.4-159 loaded.\n"\
-            f"Initializing subsystems...\n\x00"\
-            f"*System model: 102BOMBv4.2\n"\
-            f"*Serial number: {serial}\n"\
-            f"Encrypting keypad...\n\x00"\
-            f"*Keyword: {cipher_keyword}; key: {rot}\n"\
-            f"*{' '.join(ascii_uppercase)}\n"\
-            f"*{' '.join([str(n % 10) for n in range(26)])}\n"\
-            f"Rendering phases...\x00"
+#boot_text = f"Booting LEBOMB...\n\x00\x00"\
+#            f"*Kernel v3.1.4-159 loaded.\n"\
+#            f"Initializing subsystems...\n\x00"\
+#            f"*System model: 102BOMBv4.2\n"\
+#            f"*Serial number: {serial}\n"\
+#            f"Encrypting keypad...\n\x00"\
+#            f"*Keyword: {cipher_keyword}; key: {rot}\n"\
+#            f"*{' '.join(ascii_uppercase)}\n"\
+#            f"*{' '.join([str(n % 10) for n in range(26)])}\n"\
+#            f"Rendering phases...\x00"
