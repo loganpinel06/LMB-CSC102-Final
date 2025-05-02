@@ -200,7 +200,7 @@ class FinalPhase:
         self._gui = gui
         self._timer = None
         self._keypad = None
-        self._active_phases = NUM_PHASES
+        self._active_phases = 1
         self._strikes_left = NUM_STRIKES
 
         #boot text for final phase
