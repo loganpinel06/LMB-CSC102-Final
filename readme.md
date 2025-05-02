@@ -60,6 +60,12 @@ Lakers Phase
 
 
 
+SOUND IDEAS
+-If bomb explodes, play booboooboooboooooo by Lebron
+-If you get a strike, play "COME ON MANNN" by Lebron
+-If you hit the button and make the shot, play a swoosh audio
+
+
 Final Phase
 -Keypad Combination
 
