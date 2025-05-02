@@ -53,10 +53,13 @@ class Lcd(Frame):
         if self._gamephase == "Final":
             #keypad label
             self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
-            self._lkeypad.grid(row=3, column=1, columnspan=3, sticky=W)
+            self._lkeypad.grid(row=3, column=0, columnspan=3, sticky=W)
+            #timer label
+            self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
+            self._ltimer.grid(row=4, column=0, columnspan=3, sticky=W)
             #hint label
             self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
-            self._lfinalhint.grid(row=2, column=1, columnspan=3, sticky=W)
+            self._lfinalhint.grid(row=2, column=0, columnspan=3, sticky=W)
             #current game phase
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
             self._lgamephase.grid(row=1, column=0, sticky=W)

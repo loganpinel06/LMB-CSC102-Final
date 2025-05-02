@@ -208,7 +208,7 @@ class FinalPhase:
                         f"LeBron is the GOAT\n"\
                         f"Initializing subsystems...\n\x00"\
                         f"You mae it to the final phase!\n"\
-                        f"Keypad: What nickname, often stylized as a single word, does LeBron James use to reference both his \nhumble beginnings and his connection to his Ohio hometown?\n\x00"\
+                        f"Keypad: What nickname, often stylized as a single word, does \nLeBron James use to reference both his humble beginnings \nand his connection to his Ohio hometown?\n\x00"\
                         f"LeBron's Hint: You only need one digit per letter - no need to press the key multiple times (e.g., \"B\" = 2, not 22\n\x00"\
                         f"Rendering phases...\x00"
 
