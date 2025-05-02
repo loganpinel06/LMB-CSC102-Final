@@ -36,16 +36,16 @@ class BombPhase:
             keypadText = "28.4 pts, 7.6 rebs, 7.2 asts"
         elif self._gamephase == "Heat":
             #set the toggles hint text
-            togglesText = "2"
-            wiresText = "2"
-            buttonText = "2"
-            keypadText = "2"
+            togglesText = "Career Points with Heat O/U 8,000? \n         Career Assists with Heat O/U 2,000? \n         Career Rebounds with Heat O/U 2,000? \n         Career Blocks/Steals with Heat O/U 700?"
+            wiresText = "How Many Championships Did Lebron Win With The Heat?"
+            buttonText = "Drain a guaranteed 3-pointer like youre playing 2k"
+            keypadText = "27.1 pts, 6.9 rebs, and 6.3 asts"
         elif self._gamephase == "Lakers":
             #set the toggles hint text
-            togglesText = "3"
-            wiresText = "3"
-            buttonText = "3"
-            keypadText = "3"
+            togglesText = "Career Points with Lakers O/U 11,000? \n         Career Assists with Lakers O/U 3,000? \n         Career Rebounds with Lakers O/U 3,000? \n         Career Blocks/Steals with Lakers O/U 500?"
+            wiresText = "Lebron Has Averaged 25+ Points For ___ Many Seasons?"
+            buttonText = "Drain a guaranteed 3-pointer like youre playing 2k"
+            keypadText = "26.2 pts, 9.9 rebs, and 8.3 asts?"
         #setup the bootup text in bomb.py so we can use the gampphase variable to change the hints throughout the game
         self._boot_text = f"Booting LEBOMB...\n\x00\x00"\
                         f"Lebron is the GOAT\n"\
