@@ -312,8 +312,10 @@ class Keypad(PhaseThread):
                     except:
                         key = ""
                     sleep(0.1)
-                # log the key
-                self._value += str(key)
+                if key == "#":
+                    self._value = self._value[:-1]
+                else:
+                    self._value += str(key)
                 # the combination is correct -> phase defused
                 if (self._value[-1] == "*"):
                     self._value = self._value[:-1]

@@ -1,13 +1,14 @@
-Matt's Ideas for Trivia in Lebron Phases:
+Phases and Trivia, Sound Implementation, Miscellaneous Information
+LeBomb - Defuse the Bomb Project
 
 Cavs Phase
 -Wires Puzzle
     -Career High Questions
-        -How Old Was Lebron When He Was Drafted?
+        -How Old Was LeBron When He Was Drafted?
             -18 (Final Answer: 10010)
 -Toggles Puzzle
     -Parlay with Questions
-        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+        -Time to Gamble! Make a parlay with these lines regarding LeBron's career
          statistics with the Cleveland Cavaliers. (Over=1, Under=0)
             -Career Points with Cavs O/U 24,000? Under (0)
             -Career Assists with Cavs O/U 6000? Over (1)
@@ -17,16 +18,16 @@ Cavs Phase
 -Button Puzzle
     -Have to Release When Green As If You Were Playing 2k
 -Keypad Puzzle
-    -What Year Did Lebron Average 28.4 pts, 7.6 rebs, and 7.2 asts?
+    -What Year Did LeBron Average 28.4 pts, 7.6 rebs, and 7.2 asts?
         -Final Answer: 2009
 
 Heat Phase
 -Wires Puzzle
-    -How Many Championships Did Lebron Win With The Heat?
+    -How Many Championships Did LeBron Win With The Heat?
         -2 (Final Answer: 00010)
 -Toggles Puzzle
     -Parlay with Questions
-        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+        -Time to Gamble! Make a parlay with these lines regarding LeBron's career
          statistics with the Miami Heat. (Over=1, Under=0)
             Career Points with Heat O/U 8000? Under (0)
             Career Assists with Heat O/U 2000? Under (0)
@@ -36,16 +37,16 @@ Heat Phase
 -Button Puzzle
     -Have to Release When Green As If You Were Playing 2k
 -Keypad Puzzle
-    -What Year Did Lebron Average 27.1 pts, 6.9 rebs, and 6.3 asts?
+    -What Year Did LeBron Average 27.1 pts, 6.9 rebs, and 6.3 asts?
         -Final Answer: 2014
 
 Lakers Phase
 -Wires Puzzle
-    -Lebron Has Averaged 25+ Points For ___ Many Seasons?
+    -LeBron Has Averaged 25+ Points For ___ Many Seasons?
         -Final Answer: 20 (10100)
 -Toggles Puzzle
     -Parlay with Questions
-        -Time to Gamble! Make a parlay with these lines regarding Lebron's career
+        -Time to Gamble! Make a parlay with these lines regarding LeBron's career
          statistics with the Miami Heat. (Over=1, Under=0)
             Career Points with the Lakers O/U 11,000? Over (1)
             Career Assists with the Lakers O/U 3000? Over (1)
@@ -55,17 +56,38 @@ Lakers Phase
 -Button Puzzle
     -Have to Release When Green As If You Were Playing 2k
 -Keypad Puzzle
-    -What Year Did Lebron Average 26.2 pts, 9.9 rebs, and 8.3 asts?
+    -What Year Did LeBron Average 26.2 pts, 9.9 rebs, and 8.3 asts?
         -Final Answer: 2020
 
-
-
-SOUND IDEAS
--If bomb explodes, play booboooboooboooooo by Lebron
--If you get a strike, play "COME ON MANNN" by Lebron
--If you hit the button and make the shot, play a swoosh audio
-
-
 Final Phase
--Keypad Combination
+-Final Keypad Puzzle
+    -What nickname, often stylized as a single word, does LeBron James use to reference both his humble beginnings and his connection to his Ohio hometown?
+    Hint: You only need one digit per letter — no need to press the key multiple times (e.g., "B" = 2, not 22).
+        -Answer: KidFromAkron
+            -Final Answer: 543376625766
 
+Sound Implementation
+-Wires
+    -Defused: Bang Audio
+-Button
+    -Defused: Swoosh Audio
+-Keypad
+    -Defused: Irish Spring Green Audio
+-Toggles
+    -Defused: ChaChing Audio
+-Main Game/Miscellaneous
+    -Strike: OMG Valentine Audio
+    -Game Launching: Trophies Audio
+    -Switching Phases: Trophies Audio
+    -Game Won/Bomb Defused: Trophies Audio
+    -Game Lost/Bomb Exploded: BooBooBooBoo Audio
+
+Picture Implementation
+-Cavs Phase
+    -LeBron Cavs PNG
+-Heat Phase
+    -LeBron Heat PNG
+-Lakers Phase
+    -LeBron Heat PNG
+-Main Game/Miscellaneous
+    -Game Won/Bomb Defused: LeBron Trophies Image
