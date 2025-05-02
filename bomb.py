@@ -27,17 +27,33 @@ class BombPhase:
         self._strikes_left = NUM_STRIKES
 
         #SETUP TEXT VARIABLES FOR EACH PHASE FOR BOOTUP
-
+        #CAVS PHASE
+        if self._gamephase == "Cavs":
+            #set the toggles hint text
+            togglesText = "1"
+            wiresText = "1"
+            buttonText = "1"
+            keypadText = "1"
+        elif self._gamephase == "Heat":
+            #set the toggles hint text
+            togglesText = "2"
+            wiresText = "2"
+            buttonText = "2"
+            keypadText = "2"
+        elif self._gamephase == "Lakers":
+            #set the toggles hint text
+            togglesText = "3"
+            wiresText = "3"
+            buttonText = "3"
+            keypadText = "3"
         #setup the bootup text in bomb.py so we can use the gampphase variable to change the hints throughout the game
         self._boot_text = f"Booting LEBOMB...\n\x00\x00"\
-                        f"*Kernel v3.1.4-159 loaded.\n"\
+                        f"Lebron is the GOAT\n"\
                         f"Initializing subsystems...\n\x00"\
-                        f"*System model: 102BOMBv4.2\n"\
-                        f"*Serial number: {serial}\n"\
-                        f"Encrypting keypad...\n\x00"\
-                        f"*Keyword: {cipher_keyword}; key: {rot}\n"\
-                        f"*{' '.join(ascii_uppercase)}\n"\
-                        f"*{' '.join([str(n % 10) for n in range(26)])}\n"\
+                        f"Toggles: {togglesText}\n"\
+                        f"Wires: {wiresText}\n"\
+                        f"Button: {buttonText}\n\x00"\
+                        f"Keypad: {keypadText}\n"\
                         f"Rendering phases...\x00"
 
     #method to setup the phases
@@ -186,10 +202,10 @@ class BombPhase:
 #bootup method
 def bootup(phase, n=0):
     #if we're not animating (or we're at the end of the bootup text)
-    if (not ANIMATE or n == len(boot_text)):
+    if (not ANIMATE or n == len(phase._boot_text)):
         #if we're not animating, render the entire text at once (and don't process \x00)
         if (not ANIMATE):
-            phase._gui._lscroll["text"] = boot_text.replace("\x00", "")
+            phase._gui._lscroll["text"] = phase._boot_text.replace("\x00", "")
         #configure the remaining GUI widgets
         phase._gui.setup()
         #setup the phase threads, execute them, and check their statuses
@@ -199,11 +215,11 @@ def bootup(phase, n=0):
     #if we're animating
     else:
         #add the next character (but don't render \x00 since it specifies a longer pause)
-        if (boot_text[n] != "\x00"):
-            phase._gui._lscroll["text"] += boot_text[n]
+        if (phase._boot_text[n] != "\x00"):
+            phase._gui._lscroll["text"] += phase._boot_text[n]
 
         #scroll the next character after a slight delay (\x00 is a longer delay)
-        phase._gui.after(25 if boot_text[n] != "\x00" else 750, bootup, phase, n + 1)
+        phase._gui.after(25 if phase._boot_text[n] != "\x00" else 750, bootup, phase, n + 1)
 
 #method to start the next game phase
 def start_next_phase(current_phase):
