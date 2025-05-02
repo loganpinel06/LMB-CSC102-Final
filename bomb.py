@@ -250,7 +250,8 @@ lakers_phase=BombPhase("Lakers", Lcd(window, "Lakers"))
 strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
 
-#set the GUI to open in fullscreen
+# Ensure the GUI is properly initialized before setting fullscreen
+window.update_idletasks() #update the tasks so we can force the window to be fullscreen
 window.attributes("-fullscreen", True)
 
 #"boot" the bomb
