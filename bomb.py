@@ -30,10 +30,10 @@ class BombPhase:
         #CAVS PHASE
         if self._gamephase == "Cavs":
             #set the toggles hint text
-            togglesText = "1"
-            wiresText = "1"
-            buttonText = "1"
-            keypadText = "1"
+            togglesText = "Career Points with Cavs O/U 24,000? \nCareer Assists with Cavs O/U 6,000? \nCareer Rebounds with Cavs O/U 6,000? \nCareer Blocks/Steals with Cavs O/U 2,000?"
+            wiresText = "How old was Lebron when he was drafted?"
+            buttonText = "Drain a guaranteed 3-pointer like youre playing 2k as Lebron"
+            keypadText = "28.4 pts, 7.6 rebs, 7.2 asts"
         elif self._gamephase == "Heat":
             #set the toggles hint text
             togglesText = "2"
