@@ -127,6 +127,15 @@ class Lcd(Frame):
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
+        
+        #if bomb is defused, show a success message
+        if success:
+            self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb defused! You win!")
+            self._lcompletedMessage.grid(row=1, column=1, sticky=W)
+        #else show a failure message
+        else:
+            self._lfailedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb exploded! You lose!")
+            self._lfailedMessage.grid(row=1, column=1, sticky=W)
 
         # reconfigure the GUI
         # the retry button
