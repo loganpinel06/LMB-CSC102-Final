@@ -157,17 +157,8 @@ class BombPhase:
             #stop checking phases
             return
     
-        #the bomb has been successfully defused!
-        #bomb will only fully shut off after the lakers game phase
-        if (self._active_phases == 0 and self._gamephase == "Lakers"):
-            #turn off the bomb and render the conclusion GUI
-            self.turn_off()
-            self._gui.after(100, self._gui.conclusion, True)
-            #stop checking phases
-            return
-        
         #game phase has been successfully defused!
-        if (self._active_phases == 0 and self._gamephase != "Lakers"):
+        if (self._active_phases == 0):
             #start the next game phase
             start_next_phase(self)
             #stop checking phases
@@ -197,7 +188,104 @@ class BombPhase:
         #turn off the pushbutton's LED
         for pin in self._button._rgb:
             pin.value = True
+
+#create a class for the final bomb phase
+#final bomb phase will use the letters given by each subphase throughout the game to defuse a final keypad phase
+class FinalPhase:
+    #constructor passing in the gamephase and the gui element
+    def __init__(self, gamephase, gui):
+        #initialize instance variables for the main bomb
+        #only timer and keypad are used in the final phase
+        self._gamephase = gamephase
+        self._gui = gui
+        self._timer = None
+        self._keypad = None
+        self._active_phases = NUM_PHASES
+        self._strikes_left = NUM_STRIKES
+
+    #setup the phases
+    def setup_phases(self):
+        #setup the timer thread
+        self._timer = Timer(component_7seg, self._gamephase, COUNTDOWN)
+        #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
+        self._gui.setTimer(self._timer)
+        #setup the keypad thread
+        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target)
         
+        #start the phase threads
+        self._timer.start()
+        self._keypad.start()
+        
+    #method to check the phases
+    def check_phases(self):
+        #check the timer
+        if (self._timer._running):
+            #update the GUI
+            self._gui._ltimer["text"] = f"Time left: {self._timer}"
+        else:
+            #the countdown has expired -> explode!
+            #turn off the bomb and render the conclusion GUI
+            self.turn_off()
+            self._gui.after(100, self._gui.conclusion, False)
+            #don't check any more phases
+            return
+        #check the keypad
+        if (self._keypad._running):
+            #update the GUI
+            self._gui._lkeypad["text"] = f"Combination: {self._keypad}"
+            #the phase is defused -> stop the thread
+            if (self._keypad._defused):
+                self._keypad._running = False
+                self._active_phases -= 1
+            #the phase has failed -> strike
+            elif (self._keypad._failed):
+                self.strike()
+                #reset the keypad
+                self._keypad._failed = False
+                self._keypad._value = ""
+       
+       #note the strikes on the GUI
+        self._gui._lstrikes["text"] = f"Strikes left: {self._strikes_left}"
+        #too many strikes -> explode!
+        if (self._strikes_left == 0):
+            #turn off the bomb and render the conclusion GUI
+            self.turn_off()
+            self._gui.after(1000, self._gui.conclusion, False)
+            #stop checking phases
+            return
+    
+        #the bomb has been successfully defused!
+        #bomb will only fully shut off after the lakers game phase
+        if (self._active_phases == 0 and self._gamephase == "Lakers"):
+            #turn off the bomb and render the conclusion GUI
+            self.turn_off()
+            self._gui.after(100, self._gui.conclusion, True)
+            #stop checking phases
+            return
+        
+        #check the phases again after a slight delay
+        self._gui.after(100, self.check_phases)
+
+    #method to setup strikes
+    def strike(self):
+        #note the strike
+        self._strikes_left -= 1
+
+    #method to setup turn off
+    #this will also be used to stop a phase when changing the game phases
+    def turn_off(self):
+        #stop all threads
+        self._timer._running = False
+        self._keypad._running = False
+
+        #turn off the 7-segment display
+        component_7seg.blink_rate = 0
+        component_7seg.fill(0)
+        #turn off the pushbutton's LED
+        for pin in self._button._rgb:
+            pin.value = True
+        
+
 #main method
 #bootup method
 def bootup(phase, n=0):
@@ -237,6 +325,10 @@ def start_next_phase(current_phase):
     elif (current_phase == heat_phase):
         #bootup the lakers phase
         window.after(5000, bootup, lakers_phase)
+    #start the final phase
+    elif (current_phase == lakers_phase):
+        #bootup the final phase
+        window.after(5000, bootup, final_phase)
 
 #initialize the LCD GUI
 window = Tk()
@@ -245,6 +337,9 @@ window = Tk()
 cavs_phase=BombPhase("Cavs", Lcd(window, "Cavs"))
 heat_phase=BombPhase("Heat", Lcd(window, "Heat"))
 lakers_phase=BombPhase("Lakers", Lcd(window, "Lakers"))
+
+#create an object of the FinalPhase class for the final game phase
+final_phase=FinalPhase("Final", Lcd(window, "Final"))
 
 #initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES

@@ -109,7 +109,12 @@ class Lcd(Frame):
 
         # reconfigure the GUI
         #add a label to state the game phase is complete and that the next phase is starting
-        self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._gamephase} phase complete! Next phase starting...")
+        #special message for final phase
+        if self._gamephase == "Lakers":
+            self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._gamephase} phase complete! Final phase starting...")
+        else:
+            self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text=f"{self._gamephase} phase complete! Next phase starting...")
+        #grid the message label
         self._lcompletedMessage.grid(row=1, column=1, sticky=W)
 
     # setup the conclusion GUI (explosion/defusion)
@@ -188,10 +193,12 @@ class Timer(PhaseThread):
         # the default value is the specified initial value
         if gamephase == "Cavs":
             self._value = initial_value
-        if gamephase == "Heat":
+        elif gamephase == "Heat":
             self._value = initial_value-60
-        if gamephase == "Lakers":
+        elif gamephase == "Lakers":
             self._value = initial_value-120
+        elif gamephase == "Final":
+            self._value = 90
         # is the timer paused?
         self._paused = False
         # initialize the timer's minutes/seconds representation
@@ -257,6 +264,8 @@ class Keypad(PhaseThread):
             self._target = "2014"
         elif gamephase == "Lakers":
             self._target = "2020"
+        elif gamephase == "Final":
+            self._target = "1111"
 
     # runs the thread
     def run(self):
