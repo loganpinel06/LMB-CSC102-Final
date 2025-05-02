@@ -33,7 +33,7 @@ class BombPhase:
         #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
         self._gui.setTimer(self._timer)
         #setup the keypad thread
-        self._keypad = Keypad(component_keypad, keypad_target)
+        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target)
         #setup the jumper wires thread
         self._wires = Wires(component_wires, self._gamephase, wires_target)
         #setup the pushbutton thread
