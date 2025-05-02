@@ -231,12 +231,17 @@ class Timer(PhaseThread):
 
 # the keypad phase
 class Keypad(PhaseThread):
-    def __init__(self, component, target, name="Keypad"):
+    def __init__(self, component, gamephase, target, name="Keypad"):
         super().__init__(name, component, target)
         # the default value is an empty string
         self._value = ""
         #need to check the genKeypadCombo in bomb_configs later
-        self._target = "1234"
+        if gamephase == "Cavs":
+            self._target = "2009"
+        elif gamephase == "Heat":
+            self._target = "2014"
+        elif gamephase == "Lakers":
+            self._target = "2020"
 
     # runs the thread
     def run(self):
@@ -274,17 +279,17 @@ class Keypad(PhaseThread):
 # the jumper wires phase
 class Wires(PhaseThread):
     #set the target equal to the correct combination
-    def __init__(self, component, gamephase, target="10001", name="Wires"):
+    def __init__(self, component, gamephase, target, name="Wires"):
         super().__init__(name, component, target)
         #set the value of the wires to an empty string
         self._value = ""
-        #set target based on the gamephase
+        #setting new targets based on the gamephase
         if gamephase == "Cavs":
-            self._target = "10001"
+            self._target = "10010"
         elif gamephase == "Heat":
-            self._target = "00100"
+            self._target = "00010"
         elif gamephase == "Lakers":
-            self._target = "01010"
+            self._target = "10100"
 
     # runs the thread
     def run(self):
@@ -362,7 +367,7 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, gamephase, target="0111", name="Toggles"):
+    def __init__(self, component, gamephase, target, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
         #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
