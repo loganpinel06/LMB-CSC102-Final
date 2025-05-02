@@ -57,6 +57,9 @@ class Lcd(Frame):
             #timer label
             self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
             self._ltimer.grid(row=4, column=0, columnspan=3, sticky=W)
+            #strikes label
+            self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
+            self._lstrikes.grid(row=4, column=1, sticky=W)
             #hint label
             self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
             self._lfinalhint.grid(row=2, column=0, columnspan=3, sticky=W)
