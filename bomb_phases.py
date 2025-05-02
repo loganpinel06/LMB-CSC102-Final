@@ -368,9 +368,9 @@ class Toggles(PhaseThread):
         #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
         if gamephase == "Cavs":
             self._target = "0111"
-        if gamephase == "Heat":
+        elif gamephase == "Heat":
             self._target = "0011"
-        if gamephase == "Lakers":
+        elif gamephase == "Lakers":
             self._target = "1101"
         
     # runs the thread
