@@ -192,15 +192,16 @@ serial, toggles_target, wires_target = genSerial()
 keyword, cipher_keyword, rot, keypad_target, passphrase = genKeypadCombination()
 
 # generate the color of the pushbutton (which determines how to defuse the phase)
-button_color = ["R", "G", "B"]
+# button_color = choice(["R", "G", "B"])
+button_colors = ["R", "G", "B"]
 # appropriately set the target (R is None)
 button_target = None
 # G is the first numeric digit in the serial number
-if (button_color == "G"):
-    button_target = [ n for n in serial if n.isdigit() ][0]
+#if (button_color == "G"):
+    #button_target = [ n for n in serial if n.isdigit() ][0]
 # B is the last numeric digit in the serial number
-elif (button_color == "B"):
-    button_target = [ n for n in serial if n.isdigit() ][-1]
+#elif (button_color == "B"):
+    #button_target = [ n for n in serial if n.isdigit() ][-1]
 
 if (DEBUG):
     print(f"Serial number: {serial}")

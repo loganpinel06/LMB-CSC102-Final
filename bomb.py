@@ -59,19 +59,19 @@ class BombPhase:
     #method to setup the phases
     def setup_phases(self):
         #setup the timer thread
-        self._timer = Timer(component_7seg, COUNTDOWN)
+        self._timer = Timer(component_7seg, self._gamephase, COUNTDOWN)
         #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
         self._gui.setTimer(self._timer)
         #setup the keypad thread
-        self._keypad = Keypad(component_keypad, keypad_target)
+        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target)
         #setup the jumper wires thread
         self._wires = Wires(component_wires, self._gamephase, wires_target)
         #setup the pushbutton thread
-        self._button = Button(component_button_state, component_button_RGB, button_target, button_color, self._timer)
+        self._button = Button(component_button_state, component_button_RGB, self._gamephase, button_target, button_colors, self._timer)
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
         self._gui.setButton(self._button)
         #setup the toggle switches thread
-        self._toggles = Toggles(component_toggles, toggles_target)
+        self._toggles = Toggles(component_toggles, self._gamephase, toggles_target)
 
         #start the phase threads
         self._timer.start()

@@ -13,6 +13,7 @@ from threading import Thread
 from time import sleep
 import os
 import sys
+import random
 #create global variables to change clock
 ADD = 0
 SET = 0
@@ -173,10 +174,15 @@ class PhaseThread(Thread):
 
 # the timer phase
 class Timer(PhaseThread):
-    def __init__(self, component, initial_value, name="Timer"):
+    def __init__(self, component, gamephase, initial_value, name="Timer"):
         super().__init__(name, component)
         # the default value is the specified initial value
-        self._value = initial_value
+        if gamephase == "Cavs":
+            self._value = initial_value
+        if gamephase == "Heat":
+            self._value = initial_value-60
+        if gamephase == "Lakers":
+            self._value = initial_value-120
         # is the timer paused?
         self._paused = False
         # initialize the timer's minutes/seconds representation
@@ -231,7 +237,7 @@ class Timer(PhaseThread):
 
 # the keypad phase
 class Keypad(PhaseThread):
-    def __init__(self, component, target, name="Keypad"):
+    def __init__(self, component, gamephase, target, name="Keypad"):
         super().__init__(name, component, target)
         # the default value is an empty string
         self._value = ""
@@ -311,7 +317,7 @@ class Wires(PhaseThread):
 
 # the pushbutton phase
 class Button(PhaseThread):
-    def __init__(self, component_state, component_rgb, target, color, timer, name="Button"):
+    def __init__(self, component_state, component_rgb, gamephase, target, colors, timer, name="Button"):
         super().__init__(name, component_state, target)
         # the default value is False/Released
         self._value = False
@@ -319,32 +325,44 @@ class Button(PhaseThread):
         self._pressed = False
         # we need the pushbutton's RGB pins to set its color
         self._rgb = component_rgb
+        #set gamephase
+        self._gamephase = gamephase
         # the pushbutton's randomly selected LED color
-        self._colorList = color
+        #0 = red
+        #1 = green
+        #2 = blue
+        self._cList = colors
+        self._color = self._cList[0]
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
-        #create a variable i to hold the index for the list of colors so we can change the color every loop
-        self._i = 0
-
     # runs the thread
     def run(self):
+        i = 0
+        count = 0
+        wasGreen = False
         self._running = True
         # set the RGB LED color
-        #self._rgb[0].value = False if self._color == "R" else True
-        #self._rgb[1].value = False if self._color == "G" else True
-        #self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
-            #check if the variable i is greater than the length of the color list
-            if self._i >= len(self._colorList):
-                #if it is, reset the variable i to 0
-                self._i = 0
-            #set the color of the pushbutton to the color at the index i
-            self._rgb[0].value = False if self._colorList[self._i] == "R" else True
-            self._rgb[1].value = False if self._colorList[self._i] == "G" else True
-            self._rgb[2].value = False if self._colorList[self._i] == "B" else True
-
+            self._rgb[2].value = True
+            self._rgb[1].value = True
+            self._rgb[0].value = True
             # get the pushbutton's state
+            #red
+            if i == 0:
+                self._rgb[0].value = False #if self._color == "R" else True
+                self._color = "R"
+                wasGreen = False
+            #green
+            if i == 1:
+                self._rgb[1].value = False #if self._color == "G" else True
+                self._color = "G"
+                wasGreen = True
+            #blue
+            if i == 2:
+                self._rgb[2].value = False #if self._color == "B" else True
+                self._color = "B"
+                wasGreen = False
             self._value = self._component.value
             # it is pressed
             if (self._value):
@@ -357,16 +375,45 @@ class Button(PhaseThread):
                     # check the release parameters
                     # for R, nothing else is needed
                     # for G or B, a specific digit must be in the timer (sec) when released
-                    if (not self._target or self._target in self._timer._sec):
+                    #             if (not self._target or self._target in self._timer._sec):
+                    if wasGreen:
                         self._defused = True
+                        #REMEMBER TO CHANGE BACK TO TRUE
                     else:
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
-            #incremement the variable i by 1
-            self._i += 1
-            #wait 0.5 seconds before the next loop
-            sleep(0.5)
+            #randomly pick color
+            rand = random.randint(0, 100)
+            if rand >= 99:
+                i = 1
+            elif rand <=5:
+                i = 2
+            else:
+                i = 0
+            #count will go up every 0.1 seconds
+            #time for first phase
+            if self._gamephase == "Cavs":
+                if wasGreen and count<8:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
+            #time for second phase
+            if self._gamephase == "Heat":
+                if wasGreen and count<6:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
+            #time for third phase
+            if self._gamephase == "Lakers":
+                if wasGreen and count<4:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
+            sleep(0.1)
 
     # returns the pushbutton's state as a string
     def __str__(self):
@@ -377,7 +424,7 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, name="Toggles"):
+    def __init__(self, component, gamephase, target, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
         
