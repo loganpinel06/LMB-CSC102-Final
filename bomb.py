@@ -31,24 +31,24 @@ class BombPhase:
         if self._gamephase == "Cavs":
             #set the toggles hint text
             togglesText = "Career Points with Cavs O/U 24,000? \n         Career Assists with Cavs O/U 6,000? \n         Career Rebounds with Cavs O/U 6,000? \n         Career Blocks/Steals with Cavs O/U 2,000?"
-            wiresText = "How old was Lebron when he was drafted?"
+            wiresText = "How old was LeBron when he was drafted?"
             buttonText = "Drain a guaranteed 3-pointer like youre playing 2k"
             keypadText = "28.4 pts, 7.6 rebs, 7.2 asts"
         elif self._gamephase == "Heat":
             #set the toggles hint text
             togglesText = "Career Points with Heat O/U 8,000? \n         Career Assists with Heat O/U 2,000? \n         Career Rebounds with Heat O/U 2,000? \n         Career Blocks/Steals with Heat O/U 700?"
-            wiresText = "How Many Championships Did Lebron Win With The Heat?"
+            wiresText = "How Many Championships Did LeBron Win With The Heat?"
             buttonText = "Drain a guaranteed 3-pointer like youre playing 2k"
             keypadText = "27.1 pts, 6.9 rebs, and 6.3 asts"
         elif self._gamephase == "Lakers":
             #set the toggles hint text
             togglesText = "Career Points with Lakers O/U 11,000? \n         Career Assists with Lakers O/U 3,000? \n         Career Rebounds with Lakers O/U 3,000? \n         Career Blocks/Steals with Lakers O/U 500?"
-            wiresText = "Lebron Has Averaged 25+ Points For ___ Many Seasons?"
+            wiresText = "LeBron Has Averaged 25+ Points For ___ Many Seasons?"
             buttonText = "Drain a guaranteed 3-pointer like youre playing 2k"
             keypadText = "26.2 pts, 9.9 rebs, and 8.3 asts?"
         #setup the bootup text in bomb.py so we can use the gampphase variable to change the hints throughout the game
         self._boot_text = f"Booting LEBOMB...\n\x00\x00"\
-                        f"Lebron is the GOAT\n"\
+                        f"LeBron is the GOAT\n"\
                         f"Initializing subsystems...\n\x00"\
                         f"Toggles: {togglesText}\n"\
                         f"Wires: {wiresText}\n"\
@@ -202,6 +202,15 @@ class FinalPhase:
         self._keypad = None
         self._active_phases = NUM_PHASES
         self._strikes_left = NUM_STRIKES
+
+        #boot text for final phase
+        self._boot_text = f"Booting LEBOMB...\n\x00\x00"\
+                        f"LeBron is the GOAT\n"\
+                        f"Initializing subsystems...\n\x00"\
+                        f"You mae it to the final phase!\n"\
+                        f"Keypad: What nickname, often stylized as a single word, does LeBron James use to reference both his \nhumble beginnings and his connection to his Ohio hometown?\n\x00"\
+                        f"LeBron's Hint: You only need one digit per letter - no need to press the key multiple times (e.g., \"B\" = 2, not 22\n\x00"\
+                        f"Rendering phases...\x00"
 
     #setup the phases
     def setup_phases(self):
