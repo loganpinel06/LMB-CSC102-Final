@@ -348,14 +348,17 @@ class Button(PhaseThread):
             self._rgb[1].value = True
             self._rgb[0].value = True
             # get the pushbutton's state
+            #red
             if i == 0:
                 self._rgb[0].value = False #if self._color == "R" else True
                 self._color = "R"
                 wasGreen = False
+            #green
             if i == 1:
                 self._rgb[1].value = False #if self._color == "G" else True
                 self._color = "G"
                 wasGreen = True
+            #blue
             if i == 2:
                 self._rgb[2].value = False #if self._color == "B" else True
                 self._color = "B"
@@ -380,6 +383,7 @@ class Button(PhaseThread):
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
+            #randomly pick color
             rand = random.randint(0, 100)
             if rand >= 99:
                 i = 1
@@ -387,20 +391,24 @@ class Button(PhaseThread):
                 i = 2
             else:
                 i = 0
+            #count will go up every 0.1 seconds
+            #time for first phase
             if self._gamephase == "Cavs":
-                if wasGreen and count<5:
+                if wasGreen and count<8:
                     count+=1
                     i = 1
                 else:
                     count = 0
-            if self._gamephase == "Lakers":
-                if wasGreen and count<2:
-                    count+=1
-                    i = 1
-                else:
-                    count = 0
+            #time for second phase
             if self._gamephase == "Heat":
-                if wasGreen and count<3:
+                if wasGreen and count<6:
+                    count+=1
+                    i = 1
+                else:
+                    count = 0
+            #time for third phase
+            if self._gamephase == "Lakers":
+                if wasGreen and count<4:
                     count+=1
                     i = 1
                 else:
