@@ -16,8 +16,9 @@ Cavs Phase
         -Final Answer: 0111 (Parlay is Under, Over, Over, Over)
 -Button Puzzle
     -Have to Release When Green As If You Were Playing 2k
--Keypad Combination
-    -
+-Keypad Puzzle
+    -What Year Did Lebron Average 28.4 pts, 7.6 rebs, and 7.2 asts?
+        -Final Answer: 2009
 
 Heat Phase
 -Wires Puzzle
@@ -34,11 +35,14 @@ Heat Phase
         -Final Answer: 0011 (Parlay is Under, Under, Over, Over)
 -Button Puzzle
     -Have to Release When Green As If You Were Playing 2k
+-Keypad Puzzle
+    -What Year Did Lebron Average 27.1 pts, 6.9 rebs, and 6.3 asts?
+        -Final Answer: 2014
 
 Lakers Phase
 -Wires Puzzle
     -Lebron Has Averaged 25+ Points For ___ Many Seasons?
-        -Answer: 20 (10100)
+        -Final Answer: 20 (10100)
 -Toggles Puzzle
     -Parlay with Questions
         -Time to Gamble! Make a parlay with these lines regarding Lebron's career
@@ -50,13 +54,12 @@ Lakers Phase
         -Final Answer: 1101 (Parlay is Over, Over, Under, Over)
 -Button Puzzle
     -Have to Release When Green As If You Were Playing 2k
+-Keypad Puzzle
+    -What Year Did Lebron Average 26.2 pts, 9.9 rebs, and 8.3 asts?
+        -Final Answer: 2020
+
+
 
 Final Phase
 -Keypad Combination
 
-
-
-
-Keypad:
-
-displays a teamate and the keypad is a rotation cipher of teammates name
