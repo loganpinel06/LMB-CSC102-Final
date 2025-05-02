@@ -250,6 +250,9 @@ lakers_phase=BombPhase("Lakers", Lcd(window, "Lakers"))
 strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
 
+#set the GUI to open in fullscreen
+window.attributes("-fullscreen", True)
+
 #"boot" the bomb
 window.after(1000, bootup, cavs_phase)
 
