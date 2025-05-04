@@ -65,23 +65,43 @@ class Lcd(Frame):
             self.lebronCavs.grid(row=0, column=2)
         elif self._gamephase == "Heat":
             image_path = os.path.join(MEDIA, "bronphotoheat.png")
-            self.lebronHeatImage = PhotoImage(file=image_path)
-            self.lebronHeat = Label(self, image=self.lebronHeatImage)
+            #open the image with pillow
+            self.lebronHeatImage = Image.open(image_path)
+            #resize the image
+            resized = self.lebronHeatImage.resize((100, 100), Image.ANTIALIAS)
+            #update the image
+            self.updatedlebronHeat = ImageTk.PhotoImage(resized)
+            self.lebronHeat = Label(self, image=self.updatedlebronHeat)
             self.lebronHeat.grid(row=0, column=2)
         elif self._gamephase == "Lakers":
             image_path = os.path.join(MEDIA, "bronphotolakers.png")
-            self.lebronLakersImage = PhotoImage(file=image_path)
-            self.lebronLakers = Label(self, image=self.lebronLakersImage)
+            #open the image with pillow
+            self.lebronLakersImage = Image.open(image_path)
+            #resize the image
+            resized = self.lebronLakersImage.resize((100, 100), Image.ANTIALIAS)
+            #update the image
+            self.updatedlebronLakers = ImageTk.PhotoImage(resized)
+            self.lebronLakers = Label(self, image=self.updatedlebronLakers)
             self.lebronLakers.grid(row=0, column=2)
         elif self._gamephase == "Final":
             image_path = os.path.join(MEDIA, "akronohiophoto.png")
-            self.lebronAkronImage = PhotoImage(file=image_path)
-            self.lebronAkron = Label(self, image=self.lebronAkronImage)
+            #open the image with pillow
+            self.lebronAkronImage = Image.open(image_path)
+            #resize the image
+            resized = self.lebronAkronImage.resize((100, 100), Image.ANTIALIAS)
+            #update the image
+            self.updatedlebronAkron = ImageTk.PhotoImage(resized)
+            self.lebronAkron = Label(self, image=self.updatedlebronAkron)
             self.lebronAkron.grid(row=0, column=2)
         else:
             image_path = os.path.join(MEDIA, "lebrontrophies1.png")
-            self.lebronTrophiesImage = PhotoImage(file=image_path)
-            self.lebronTrophies = Label(self, image=self.lebronTrophiesImage)
+            #open the image with pilow
+            self.lebronTrophiesImage = Image.open(image_path)
+            #resize the image
+            resized = self.lebronTrophiesImage.resize((100, 100), Image.ANTIALIAS)
+            #update the image 
+            self.updatedlebronTrophies = ImageTk.PhotoImage(resized)
+            self.lebronTrophies = Label(self, image=self.updatedlebronTrophies)
             self.lebronTrophies.grid(row=0, column=2)
         self.pack(fill=BOTH, expand=True)
 
