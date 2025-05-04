@@ -52,7 +52,7 @@ class Lcd(Frame):
             self.lebronHeat = Label(self, image="bronphotoheat.png")
             self.lebronHeat.grid(row=0, column=2)
         elif self._gamephase == "Lakers":
-            self.lebronLakers = Label(self, image="bronphotolakers")
+            self.lebronLakers = Label(self, image="bronphotolakers.png")
             self.lebronLakers.grid(row=0, column=2)
         elif self._gamephase == "Final":
             self.lebronAkron = Label(self, image="akronohiophoto.png")
