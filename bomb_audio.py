@@ -17,12 +17,19 @@ def initPygame():
 
 #create a subroutine for the bootup sound
 def bootupSound():
-    #get the mp3 file path
+    # Get the mp3 file path
     trophies = os.path.join(MEDIA, "trophiesdrake.mp3")
-    #load the mixer
+    # Load the mixer
     sound = pygame.mixer.Sound(trophies)
-    #play the sound
+    # Play the sound
     sound.play()
-    #stop the sound
-    sound.stop()
+    # Use a timer to stop the sound after 5 seconds without blocking the program
+    pygame.time.set_timer(pygame.USEREVENT, 5000)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.USEREVENT:
+                sound.stop()
+                running = False
 
