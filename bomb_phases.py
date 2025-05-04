@@ -391,12 +391,14 @@ class Keypad(PhaseThread):
         #update the hint label on the GUI using .config
         self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
 
-        #play the toggles sound
+        #play the keypad sound
         keypadSound()
 
     # returns the keypad combination as a string
     def __str__(self):
         if (self._defused):
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()  
             #return the defused message
             return "DEFUSED"
         else:
@@ -449,12 +451,14 @@ class Wires(PhaseThread):
         #update the hint label on the GUI using .config
         self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
 
-        #play the toggles sound
+        #play the wires sound
         wiresSound()
 
     # returns the jumper wires state as a string
     def __str__(self):
         if (self._defused):
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()  
             #return the defused message
             return "DEFUSED"
         else:
@@ -578,12 +582,14 @@ class Button(PhaseThread):
         #update the hint label on the GUI using .config
         self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
 
-        #play the toggles sound
+        #play the button sound
         buttonSound()
 
     # returns the pushbutton's state as a string
     def __str__(self):
         if (self._defused):
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()  
             #return the defused message
             return "DEFUSED"
         else:
