@@ -34,3 +34,59 @@ def bootupSound():
     #start a thread to stop the music after 15 seconds
     threading.Thread(target=stopMusic).start()
 
+#subroutine for the wires sound
+def wiresSound():
+    #get the mp3 file path
+    bang = os.path.join(MEDIA, "bang.mp3")
+    #load the mixer
+    sound = pygame.mixer.Sound(bang)
+    #play the sound
+    sound.play()
+    #pause for 8 seconds so the sound can play
+    pygame.time.wait(8000)
+
+#subroutine for the button sound
+def buttonSound():
+    #get the mp3 file path
+    swish = os.path.join(MEDIA, "swish.mp3")
+    #load the mixer
+    sound = pygame.mixer.Sound(swish)
+    #play the sound
+    sound.play()
+    #pause for 2 seconds so the sound can play
+    pygame.time.wait(2000)
+
+#subroutine for the keypad sound
+def keypadSound():
+    #get the mp3 file path
+    greenbean = os.path.join(MEDIA, "greenbean.mp3")
+    #load the mixer
+    sound = pygame.mixer.Sound(greenbean)
+    #play the sound
+    sound.play()
+    #pause for 5 seconds so the sound can play
+    pygame.time.wait(5000)
+
+#subroutine for the toggles sound
+def togglesSound():
+    #get the mp3 file path
+    money = os.path.join(MEDIA, "money.mp3")
+    #load the mixer
+    sound = pygame.mixer.Sound(money)
+    #play the sound
+    sound.play()
+    #pause for 1 second so the sound can play
+    pygame.time.wait(1000)
+
+#subroutine for the explosion sound
+def explosionSound():
+    #get the mp3 file path
+    explosion = os.path.join(MEDIA, "bombexplode.mp3")
+    #load the mixer
+    sound = pygame.mixer.Sound(explosion)
+    #play the sound
+    sound.play()
+    #pause for 3 seconds so the sound can play
+    pygame.time.wait(3000)
+    #stop the sound early
+    sound.stop()

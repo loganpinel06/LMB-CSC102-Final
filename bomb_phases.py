@@ -389,6 +389,9 @@ class Wires(PhaseThread):
     # returns the jumper wires state as a string
     def __str__(self):
         if (self._defused):
+            #play the wires sound
+            wiresSound()
+            #return the defused message
             return "DEFUSED"
         else:
            #return the value of the wires as a string
