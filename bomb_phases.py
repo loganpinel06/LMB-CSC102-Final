@@ -53,8 +53,6 @@ class Lcd(Frame):
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         self.pack(fill=BOTH, expand=True)
-        #play the bootup sound
-        bootupSound()
 
     # sets up the LCD GUI
     def setup(self):
