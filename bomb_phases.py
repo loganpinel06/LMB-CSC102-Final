@@ -312,7 +312,8 @@ class Keypad(PhaseThread):
                     except:
                         key = ""
                     sleep(0.1)
-                if key == "#":
+                #delete function with "#" key
+                if key == "#" and (len(self._value) > 0):
                     self._value = self._value[:-1]
                 else:
                     self._value += str(key)
