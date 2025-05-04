@@ -290,11 +290,7 @@ class FinalPhase:
         #turn off the 7-segment display
         component_7seg.blink_rate = 0
         component_7seg.fill(0)
-        #turn off the pushbutton's LED
-        for pin in self._button._rgb:
-            pin.value = True
         
-
 #main method
 #bootup method
 def bootup(phase, n=0):
@@ -359,7 +355,7 @@ window.update_idletasks() #update the tasks so we can force the window to be ful
 window.attributes("-fullscreen", True)
 
 #"boot" the bomb
-window.after(1000, bootup, cavs_phase)
+window.after(1000, bootup, lakers_phase)
 
 #display the LCD GUI
 window.mainloop()
