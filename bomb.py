@@ -253,7 +253,7 @@ class FinalPhase:
                 self._keypad._failed = False
                 self._keypad._value = ""
        
-       #note the strikes on the GUI
+        #note the strikes on the GUI
         self._gui._lstrikes["text"] = f"Strikes left: {self._strikes_left}"
         #too many strikes -> explode!
         if (self._strikes_left == 0):
@@ -265,7 +265,7 @@ class FinalPhase:
     
         #the bomb has been successfully defused!
         #bomb will only fully shut off after the lakers game phase
-        if (self._active_phases == 0 and self._gamephase == "Lakers"):
+        if (self._active_phases == 0):
             #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(100, self._gui.conclusion, True)
