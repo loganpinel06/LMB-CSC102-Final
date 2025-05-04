@@ -45,6 +45,21 @@ class Lcd(Frame):
         # the scrolling informative "boot" text
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
+        if self._gamephase == "Cavs":
+            self.lebronCavs = Label(self, image="bronphotocavs.png")
+            self.lebronCavs.grid(row=0, column=2)
+        elif self._gamephase == "Heat":
+            self.lebronHeat = Label(self, image="bronphotoheat.png")
+            self.lebronHeat.grid(row=0, column=2)
+        elif self._gamephase == "Lakers":
+            self.lebronLakers = Label(self, image="bronphotolakers")
+            self.lebronLakers.grid(row=0, column=2)
+        elif self._gamephase == "Final":
+            self.lebronAkron = Label(self, image="akronohiophoto.png")
+            self.lebronAkron.grid(row=0, column=2)
+        else:
+            self.lebronTrophies = Label(self, image="lebrontrophies1.png")
+            self.lebronTrophies.grid(row=0, column=2)
         self.pack(fill=BOTH, expand=True)
 
     # sets up the LCD GUI
