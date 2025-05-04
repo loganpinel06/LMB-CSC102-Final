@@ -345,6 +345,8 @@ class Keypad(PhaseThread):
             self._target = "2020"
         elif gamephase == "Final":
             self._target = "543376625766"
+        #setup the gamephase variable so we can check later if the gamephase is final when calling getHint()
+        self._gamephase = gamephase
         #setup the lcdInstance so we can update the hint label
         self._lcdInstance = lcdInstance
 

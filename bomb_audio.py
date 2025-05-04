@@ -22,7 +22,9 @@ def bootupSound():
     trophies = os.path.join(MEDIA, "trophiesdrake.mp3")
     #load the mixer
     pygame.mixer.music.load(trophies)
-    #stop the music after 15 seconds
+    #set the volume to 0.7
+    pygame.mixer.music.set_volume(0.7)
+    #play the music
     pygame.mixer.music.play(loops=0, start=0.0)
     
     #timer so we can stop the sound after 15 seconds
@@ -40,6 +42,8 @@ def wiresSound():
     bang = os.path.join(MEDIA, "bang.mp3")
     #load the mixer
     sound = pygame.mixer.Sound(bang)
+    #set the volume to 0.7
+    sound.set_volume(0.7)
     #play the sound
     sound.play()
     #pause for 8 seconds so the sound can play
@@ -62,6 +66,8 @@ def keypadSound():
     greenbean = os.path.join(MEDIA, "greenbean.mp3")
     #load the mixer
     sound = pygame.mixer.Sound(greenbean)
+    #set the volume to 0.7
+    sound.set_volume(0.7)
     #play the sound
     sound.play()
     #pause for 5 seconds so the sound can play
