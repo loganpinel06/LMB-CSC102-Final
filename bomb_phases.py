@@ -559,21 +559,29 @@ class Toggles(PhaseThread):
             
             #checks if self._value and self._target are the same, defusing the toggles phase
             if (self._value == self._target):
-                self._defused = True        
+                self._defused = True
+                #call the getHint subroutine to get a letter for the final code hint
+                self.getHint()    
             sleep(0.1)
+
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI
+        Lcd._lfinalhint["text"] = "Hint: {}".format(FINAL_CODE_HINT)
             
     # returns the toggle switches state as a string
     def __str__(self):
-        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
-        global FINAL_CODE_LIST, FINAL_CODE_HINT
         if (self._defused):
-            #give the user a hint for the final code
-            #randomly select a letter from the FINAL_CODE_LIST
-            letter = random.choice(FINAL_CODE_LIST)
-            #remove the letter from the list
-            FINAL_CODE_LIST.remove(letter)
-            #add the letter to the FINAL_CODE_HINT
-            FINAL_CODE_HINT += letter
             #play the toggles sound
             togglesSound()
             #return the defused message
