@@ -296,8 +296,9 @@ class FinalPhase:
 #main method
 #bootup method
 def bootup(phase, n=0):
-    #play the bootup sound
-    bootupSound()
+    #play the bootup sound on the first call
+    if ANIMATE:
+        bootupSound()
     #if we're not animating (or we're at the end of the bootup text)
     if (not ANIMATE or n == len(phase._boot_text)):
         #if we're not animating, render the entire text at once (and don't process \x00)
