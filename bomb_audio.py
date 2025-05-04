@@ -5,7 +5,8 @@
 #imports
 import pygame
 import os
-from time import sleep
+import time
+import threading
 
 #create a global variable for the bomb audio directory
 MEDIA = "/home/spartans/LMB-CSC102-Final/media"
@@ -23,9 +24,13 @@ def bootupSound():
     pygame.mixer.music.load(trophies)
     #stop the music after 5 seconds
     pygame.mixer.music.play(loops=0, start=0.0)
-    sleep(5)
-    #stop the music
-    pygame.mixer.music.stop()
-    #unload the mixer
-    pygame.mixer.music.unload()
+    
+    #timer so we can stop the sound after 5 seconds
+    def stopMusic():
+        time.sleep(5)
+        pygame.mixer.music.stop()
+        pygame.mixer.music.unload()
+    
+    #start a thread to stop the music after 5 seconds
+    threading.Thread(target=stopMusic).start()
 
