@@ -537,7 +537,7 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, gamephase, target, name="Toggles"):
+    def __init__(self, component, gamephase, target, lcdInstance, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
         #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
@@ -547,6 +547,8 @@ class Toggles(PhaseThread):
             self._target = "0011"
         elif gamephase == "Lakers":
             self._target = "1101"
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
         
     # runs the thread
     def run(self):
@@ -576,8 +578,8 @@ class Toggles(PhaseThread):
         #add the letter to the FINAL_CODE_HINT
         FINAL_CODE_HINT += letter
 
-        #update the hint label on the GUI
-        Lcd._lfinalhint["text"] = "Hint: {}".format(FINAL_CODE_HINT)
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
             
     # returns the toggle switches state as a string
     def __str__(self):

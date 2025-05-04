@@ -73,7 +73,7 @@ class BombPhase:
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
         self._gui.setButton(self._button)
         #setup the toggle switches thread
-        self._toggles = Toggles(component_toggles, self._gamephase, toggles_target)
+        self._toggles = Toggles(component_toggles, self._gamephase, toggles_target, self._gui)
 
         #start the phase threads
         self._timer.start()
