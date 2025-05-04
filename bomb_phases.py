@@ -14,9 +14,23 @@ from time import sleep
 import os
 import sys
 import random
+#import the bomb_audio file and pygame
+import pygame
+from bomb_audio import *
 #create global variables to change clock
 ADD = 0
 SET = 0
+
+#create global variables for the final code hint
+FINAL_CODE_HINT = ""
+
+#create a global list for the letters of the final code
+#list has letters for the code: "KidFromAkron"
+FINAL_CODE_LIST = ["K", "i", "d", "F", "r", "o", "m", "A", "k", "r", "o", "n"]
+
+#initialize pygame
+initPygame()
+
 #########
 # classes
 #########
@@ -49,6 +63,8 @@ class Lcd(Frame):
 
     # sets up the LCD GUI
     def setup(self):
+        #call global variable FINAL_CODE for the hin label
+        global FINAL_CODE
         #special setup for final game phase
         if self._gamephase == "Final":
             #keypad label
@@ -61,7 +77,7 @@ class Lcd(Frame):
             self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
             self._lstrikes.grid(row=4, column=1, sticky=W)
             #hint label
-            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
+            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: {}".format(FINAL_CODE_HINT))
             self._lfinalhint.grid(row=2, column=0, columnspan=3, sticky=W)
             #current game phase
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
@@ -98,7 +114,7 @@ class Lcd(Frame):
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
             self._lgamephase.grid(row=1, column=0, sticky=W)
             #hint label
-            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
+            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: {}".format(FINAL_CODE_HINT))
             self._lfinalhint.grid(row=1, column=1, columnspan=3, sticky=W)
             #showbuttons
             if (SHOW_BUTTONS):
@@ -134,6 +150,8 @@ class Lcd(Frame):
         self._lstrikes.destroy()
         #destroy the game phase label
         self._lgamephase.destroy()
+        #destroy the hint label
+        self._lfinalhint.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
@@ -148,21 +166,39 @@ class Lcd(Frame):
         #grid the message label
         self._lcompletedMessage.grid(row=1, column=1, sticky=W)
 
-    # setup the conclusion GUI (explosion/defusion)
+    #setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
-        self._lscroll["text"] = ""
-        self._ltimer.destroy()
-        self._lkeypad.destroy()
-        self._lwires.destroy()
-        self._lbutton.destroy()
-        self._ltoggles.destroy()
-        self._lstrikes.destroy()
-        #destroy the game phase label
-        self._lgamephase.destroy()
-        if (SHOW_BUTTONS):
-            self._bpause.destroy()
-            self._bquit.destroy()
+        #Final phase doesnt use all widgets so destroy seperately
+        if self._gamephase == "Final":
+            self._lscroll["text"] = ""
+            self._ltimer.destroy()
+            self._lkeypad.destroy()
+            self._lstrikes.destroy()
+            self._lfinalhint.destroy()
+            self._lgamephase.destroy()
+            #showbuttons
+            if (SHOW_BUTTONS):
+                self._bpause.destroy()
+                self._bquit.destroy()
+        
+        #all other phases
+        else:
+            self._lscroll["text"] = ""
+            self._ltimer.destroy()
+            self._lkeypad.destroy()
+            self._lwires.destroy()
+            self._lbutton.destroy()
+            self._ltoggles.destroy()
+            self._lstrikes.destroy()
+            #destroy the game phase label
+            self._lgamephase.destroy()
+            #destroy the hint label
+            self._lfinalhint.destroy()
+            #showbuttons
+            if (SHOW_BUTTONS):
+                self._bpause.destroy()
+                self._bquit.destroy()
         
         #if bomb is defused, show a success message
         if success:
@@ -172,6 +208,10 @@ class Lcd(Frame):
         else:
             self._lfailedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb exploded! You lose!")
             self._lfailedMessage.grid(row=1, column=1, sticky=W)
+            #force the GUI to update before playing the explosion sound
+            self.update_idletasks()
+            #play the explosion sound
+            explosionSound()
 
         # reconfigure the GUI
         # the retry button
@@ -190,13 +230,21 @@ class Lcd(Frame):
     # quits the GUI, resetting some components
     def quit(self):
         if (RPi):
-            # turn off the 7-segment display
-            self._timer._running = False
-            self._timer._component.blink_rate = 0
-            self._timer._component.fill(0)
-            # turn off the pushbutton's LED
-            for pin in self._button._rgb:
-                pin.value = True
+            #Final phase doesnt have the button phase
+            if self._gamephase == "Final":
+                # turn off the 7-segment display
+                self._timer._running = False
+                self._timer._component.blink_rate = 0
+                self._timer._component.fill(0)
+            #all other phases
+            else:
+                # turn off the 7-segment display
+                self._timer._running = False
+                self._timer._component.blink_rate = 0
+                self._timer._component.fill(0)
+                # turn off the pushbutton's LED
+                for pin in self._button._rgb:
+                    pin.value = True
         # exit the application
         exit(0)
 
@@ -284,7 +332,7 @@ class Timer(PhaseThread):
 
 # the keypad phase
 class Keypad(PhaseThread):
-    def __init__(self, component, gamephase, target, name="Keypad"):
+    def __init__(self, component, gamephase, target, lcdInstance, name="Keypad"):
         super().__init__(name, component, target)
         # the default value is an empty string
         self._value = ""
@@ -296,7 +344,11 @@ class Keypad(PhaseThread):
         elif gamephase == "Lakers":
             self._target = "2020"
         elif gamephase == "Final":
-            self._target = "1111"
+            self._target = "543376625766"
+        #setup the gamephase variable so we can check later if the gamephase is final when calling getHint()
+        self._gamephase = gamephase
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
 
     # runs the thread
     def run(self):
@@ -313,7 +365,8 @@ class Keypad(PhaseThread):
                     except:
                         key = ""
                     sleep(0.1)
-                if key == "#":
+                #delete function with "#" key
+                if key == "#" and (len(self._value) > 0):
                     self._value = self._value[:-1]
                 else:
                     self._value += str(key)
@@ -329,9 +382,32 @@ class Keypad(PhaseThread):
                         self._failed = True
             sleep(0.1)
 
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the keypad sound
+        keypadSound()
+
     # returns the keypad combination as a string
     def __str__(self):
         if (self._defused):
+            #check if the gamephase is not final because we dont want to getHint or play the sound during final phase
+            if self._gamephase != "Final":
+                #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+                self.getHint()
+            #return the defused message
             return "DEFUSED"
         else:
             return self._value
@@ -339,7 +415,7 @@ class Keypad(PhaseThread):
 # the jumper wires phase
 class Wires(PhaseThread):
     #set the target equal to the correct combination
-    def __init__(self, component, gamephase, target, name="Wires"):
+    def __init__(self, component, gamephase, target, lcdInstance, name="Wires"):
         super().__init__(name, component, target)
         #set the value of the wires to an empty string
         self._value = ""
@@ -350,6 +426,8 @@ class Wires(PhaseThread):
             self._target = "00010"
         elif gamephase == "Lakers":
             self._target = "10100"
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
 
     # runs the thread
     def run(self):
@@ -368,9 +446,30 @@ class Wires(PhaseThread):
                 
             sleep(0.1)
 
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the wires sound
+        wiresSound()
+
     # returns the jumper wires state as a string
     def __str__(self):
         if (self._defused):
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()  
+            #return the defused message
             return "DEFUSED"
         else:
            #return the value of the wires as a string
@@ -378,7 +477,7 @@ class Wires(PhaseThread):
 
 # the pushbutton phase
 class Button(PhaseThread):
-    def __init__(self, component_state, component_rgb, gamephase, target, colors, timer, name="Button"):
+    def __init__(self, component_state, component_rgb, gamephase, target, colors, timer, lcdInstance, name="Button"):
         super().__init__(name, component_state, target)
         # the default value is False/Released
         self._value = False
@@ -396,6 +495,8 @@ class Button(PhaseThread):
         self._color = self._cList[0]
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
 
     # runs the thread
     def run(self):
@@ -479,16 +580,37 @@ class Button(PhaseThread):
                     count = 0
             sleep(0.1)
 
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the button sound
+        buttonSound()
+
     # returns the pushbutton's state as a string
     def __str__(self):
         if (self._defused):
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()  
+            #return the defused message
             return "DEFUSED"
         else:
             return str("Pressed" if self._value else "Released")
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, gamephase, target, name="Toggles"):
+    def __init__(self, component, gamephase, target, lcdInstance, name="Toggles"):
         super().__init__(name, component, target)
         self._value = ""
         #setting targets depending on phase (cavs, heat, lakers) for parlay puzzle
@@ -498,6 +620,8 @@ class Toggles(PhaseThread):
             self._target = "0011"
         elif gamephase == "Lakers":
             self._target = "1101"
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
         
     # runs the thread
     def run(self):
@@ -512,12 +636,33 @@ class Toggles(PhaseThread):
             if (self._value == self._target):
                 ADD = 15
                 self._defused = True
-                
+             
             sleep(0.1)
+
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the toggles sound
+        togglesSound()
             
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()   
+            #return the defused message
             return "DEFUSED"
         else:
             return f"{self._value}"
