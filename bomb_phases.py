@@ -148,21 +148,37 @@ class Lcd(Frame):
         #grid the message label
         self._lcompletedMessage.grid(row=1, column=1, sticky=W)
 
-    # setup the conclusion GUI (explosion/defusion)
+    #setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
-        self._lscroll["text"] = ""
-        self._ltimer.destroy()
-        self._lkeypad.destroy()
-        self._lwires.destroy()
-        self._lbutton.destroy()
-        self._ltoggles.destroy()
-        self._lstrikes.destroy()
-        #destroy the game phase label
-        self._lgamephase.destroy()
-        if (SHOW_BUTTONS):
-            self._bpause.destroy()
-            self._bquit.destroy()
+        #Final phase doesnt use all widgets so destroy seperately
+        if self._gamephase == "Final":
+            self._lscroll["text"] = ""
+            self._ltimer.destroy()
+            self._lkeypad.destroy()
+            self._lstrikes.destroy()
+            self._lfinalhint.destroy()
+            self._lgamephase.destroy()
+            #showbuttons
+            if (SHOW_BUTTONS):
+                self._bpause.destroy()
+                self._bquit.destroy()
+        
+        #all other phases
+        else:
+            self._lscroll["text"] = ""
+            self._ltimer.destroy()
+            self._lkeypad.destroy()
+            self._lwires.destroy()
+            self._lbutton.destroy()
+            self._ltoggles.destroy()
+            self._lstrikes.destroy()
+            #destroy the game phase label
+            self._lgamephase.destroy()
+            #showbuttons
+            if (SHOW_BUTTONS):
+                self._bpause.destroy()
+                self._bquit.destroy()
         
         #if bomb is defused, show a success message
         if success:

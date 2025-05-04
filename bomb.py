@@ -355,7 +355,7 @@ window.update_idletasks() #update the tasks so we can force the window to be ful
 window.attributes("-fullscreen", True)
 
 #"boot" the bomb
-window.after(1000, bootup, lakers_phase)
+window.after(1000, bootup, cavs_phase)
 
 #display the LCD GUI
 window.mainloop()
