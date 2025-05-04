@@ -325,6 +325,7 @@ class Keypad(PhaseThread):
                         self._defused = True
                     # the combination is incorrect -> phase failed (strike)
                     elif (self._value != self._target):
+                        ADD = -15
                         self._failed = True
             sleep(0.1)
 
@@ -442,6 +443,7 @@ class Button(PhaseThread):
                         self._defused = True
                         #REMEMBER TO CHANGE BACK TO TRUE
                     else:
+                        ADD = -15
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
