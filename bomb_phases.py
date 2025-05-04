@@ -21,6 +21,13 @@ from bomb_audio import *
 ADD = 0
 SET = 0
 
+#create global variables for the final code hint
+FINAL_CODE_HINT = ""
+
+#create a global list for the letters of the final code
+#list has letters for the code: "KidFromAkron"
+FINAL_CODE_LIST = ["K", "i", "d", "F", "r", "o", "m", "A", "k", "r", "o", "n"]
+
 #initialize pygame
 initPygame()
 
@@ -56,6 +63,8 @@ class Lcd(Frame):
 
     # sets up the LCD GUI
     def setup(self):
+        #call global variable FINAL_CODE for the hin label
+        global FINAL_CODE
         #special setup for final game phase
         if self._gamephase == "Final":
             #keypad label
@@ -68,7 +77,7 @@ class Lcd(Frame):
             self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
             self._lstrikes.grid(row=4, column=1, sticky=W)
             #hint label
-            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
+            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: {}".format(FINAL_CODE_HINT))
             self._lfinalhint.grid(row=2, column=0, columnspan=3, sticky=W)
             #current game phase
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
@@ -105,7 +114,7 @@ class Lcd(Frame):
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
             self._lgamephase.grid(row=1, column=0, sticky=W)
             #hint label
-            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
+            self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: {}".format(FINAL_CODE_HINT))
             self._lfinalhint.grid(row=1, column=1, columnspan=3, sticky=W)
             #showbuttons
             if (SHOW_BUTTONS):
@@ -221,13 +230,21 @@ class Lcd(Frame):
     # quits the GUI, resetting some components
     def quit(self):
         if (RPi):
-            # turn off the 7-segment display
-            self._timer._running = False
-            self._timer._component.blink_rate = 0
-            self._timer._component.fill(0)
-            # turn off the pushbutton's LED
-            for pin in self._button._rgb:
-                pin.value = True
+            #Final phase doesnt have the button phase
+            if self._gamephase == "Final":
+                # turn off the 7-segment display
+                self._timer._running = False
+                self._timer._component.blink_rate = 0
+                self._timer._component.fill(0)
+            #all other phases
+            else:
+                # turn off the 7-segment display
+                self._timer._running = False
+                self._timer._component.blink_rate = 0
+                self._timer._component.fill(0)
+                # turn off the pushbutton's LED
+                for pin in self._button._rgb:
+                    pin.value = True
         # exit the application
         exit(0)
 
@@ -547,7 +564,16 @@ class Toggles(PhaseThread):
             
     # returns the toggle switches state as a string
     def __str__(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
         if (self._defused):
+            #give the user a hint for the final code
+            #randomly select a letter from the FINAL_CODE_LIST
+            letter = random.choice(FINAL_CODE_LIST)
+            #remove the letter from the list
+            FINAL_CODE_LIST.remove(letter)
+            #add the letter to the FINAL_CODE_HINT
+            FINAL_CODE_HINT += letter
             #play the toggles sound
             togglesSound()
             #return the defused message
