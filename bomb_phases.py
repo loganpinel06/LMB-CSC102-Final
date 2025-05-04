@@ -14,6 +14,8 @@ from time import sleep
 import os
 import sys
 import random
+#importing pillow for image resizing purposes
+from PIL import ImageTk, Image
 #create global variables to change clock
 ADD = 0
 SET = 0
@@ -53,8 +55,13 @@ class Lcd(Frame):
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         if self._gamephase == "Cavs":
             image_path = os.path.join(MEDIA, "bronphotocavs.png")
-            self.lebronCavsImage = PhotoImage(file=image_path)
-            self.lebronCavs = Label(self, image=self.lebronCavsImage)
+            #open the image with pillow
+            self.lebronCavsImage = Image.open(image_path)
+            #resize the image
+            resized = self.lebronCavsImage.resize((100, 100), Image.ANTIALIAS)
+            #update the image
+            self.updatedlebronCavs = ImageTk.PhotoImage(resized)
+            self.lebronCavs = Label(self, image=self.updatedlebronCavs)
             self.lebronCavs.grid(row=0, column=2)
         elif self._gamephase == "Heat":
             image_path = os.path.join(MEDIA, "bronphotoheat.png")
