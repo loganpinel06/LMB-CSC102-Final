@@ -9,7 +9,7 @@ import time
 import threading
 
 #create a global variable for the bomb audio directory
-MEDIA = "/home/spartans/LMB-CSC142-Final/media"
+MEDIA = "/home/spartans/LMB-CSC102-Final/media"
 
 #create a subroutine to initialize the pygame mixer
 def initPygame():
