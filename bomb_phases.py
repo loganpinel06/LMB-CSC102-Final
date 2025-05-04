@@ -344,7 +344,7 @@ class Keypad(PhaseThread):
         elif gamephase == "Lakers":
             self._target = "2020"
         elif gamephase == "Final":
-            self._target = "1111"
+            self._target = "543376625766"
         #setup the lcdInstance so we can update the hint label
         self._lcdInstance = lcdInstance
 
