@@ -561,9 +561,7 @@ class Toggles(PhaseThread):
             
             #checks if self._value and self._target are the same, defusing the toggles phase
             if (self._value == self._target):
-                self._defused = True
-                #call the getHint subroutine to get a letter for the final code hint
-                self.getHint()    
+                self._defused = True 
             sleep(0.1)
 
     #subroutine to get a letter for the final code hint and update the label on the GUI
@@ -580,12 +578,15 @@ class Toggles(PhaseThread):
 
         #update the hint label on the GUI using .config
         self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the toggles sound
+        togglesSound()
             
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
-            #play the toggles sound
-            togglesSound()
+            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+            self.getHint()   
             #return the defused message
             return "DEFUSED"
         else:
