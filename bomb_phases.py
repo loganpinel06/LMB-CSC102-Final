@@ -352,6 +352,9 @@ class Keypad(PhaseThread):
     # returns the keypad combination as a string
     def __str__(self):
         if (self._defused):
+            #play the keypad sound
+            keypadSound()
+            #return the defused message
             return "DEFUSED"
         else:
             return self._value
@@ -500,6 +503,9 @@ class Button(PhaseThread):
     # returns the pushbutton's state as a string
     def __str__(self):
         if (self._defused):
+            #play the button sound
+            buttonSound()
+            #return the defused message
             return "DEFUSED"
         else:
             return str("Pressed" if self._value else "Released")
@@ -534,6 +540,9 @@ class Toggles(PhaseThread):
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
+            #play the toggles sound
+            togglesSound()
+            #return the defused message
             return "DEFUSED"
         else:
             return f"{self._value}"
