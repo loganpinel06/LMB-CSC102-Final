@@ -199,6 +199,8 @@ class Lcd(Frame):
         else:
             self._lfailedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb exploded! You lose!")
             self._lfailedMessage.grid(row=1, column=1, sticky=W)
+            #force the GUI to update before playing the explosion sound
+            self.update_idletasks()
             #play the explosion sound
             explosionSound()
 
