@@ -23,8 +23,6 @@ def bootupSound():
     sound = pygame.mixer.Sound(trophies)
     #play the sound
     sound.play()
-    #wait for 5 seconds
-    pygame.time.wait(5000)
     #stop the sound
     sound.stop()
 
