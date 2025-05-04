@@ -22,15 +22,15 @@ def bootupSound():
     trophies = os.path.join(MEDIA, "trophiesdrake.mp3")
     #load the mixer
     pygame.mixer.music.load(trophies)
-    #stop the music after 16 seconds
+    #stop the music after 15 seconds
     pygame.mixer.music.play(loops=0, start=0.0)
     
-    #timer so we can stop the sound after 16 seconds
+    #timer so we can stop the sound after 15 seconds
     def stopMusic():
-        time.sleep(16)
+        time.sleep(15)
         pygame.mixer.music.stop()
         pygame.mixer.music.unload()
     
-    #start a thread to stop the music after 16 seconds
+    #start a thread to stop the music after 15 seconds
     threading.Thread(target=stopMusic).start()
 
