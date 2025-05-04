@@ -8,6 +8,8 @@
 from bomb_configs import *
 #import the phases
 from bomb_phases import *
+#import the audio
+from bomb_audio import *
 
 #create a class for the BombPhases
 #this will act as a parent class to run all bomb phases but will allow us to do this three times
@@ -294,6 +296,8 @@ class FinalPhase:
 #main method
 #bootup method
 def bootup(phase, n=0):
+    #play the bootup sound
+    bootupSound()
     #if we're not animating (or we're at the end of the bootup text)
     if (not ANIMATE or n == len(phase._boot_text)):
         #if we're not animating, render the entire text at once (and don't process \x00)
