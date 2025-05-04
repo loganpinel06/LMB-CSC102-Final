@@ -397,8 +397,10 @@ class Keypad(PhaseThread):
     # returns the keypad combination as a string
     def __str__(self):
         if (self._defused):
-            #call the getHint subroutine to get a letter for the final code hint and play the defused sound
-            self.getHint()  
+            #check if the gamephase is not final because we dont want to getHint or play the sound during final phase
+            if self._gamephase != "Final":
+                #call the getHint subroutine to get a letter for the final code hint and play the defused sound
+                self.getHint()
             #return the defused message
             return "DEFUSED"
         else:
