@@ -17,6 +17,10 @@ import random
 #create global variables to change clock
 ADD = 0
 SET = 0
+
+#create global variable for media directory
+MEDIA = "/home/spartans/LMB-CSC102-Final/media"
+
 #########
 # classes
 #########
@@ -38,6 +42,8 @@ class Lcd(Frame):
 
     # sets up the LCD "boot" GUI
     def setupBoot(self):
+        #access the global variable: media
+        global MEDIA 
         # set column weights
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
@@ -46,19 +52,24 @@ class Lcd(Frame):
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         if self._gamephase == "Cavs":
-            self.lebronCavs = Label(self, image="bronphotocavs.png")
+            image_path = os.path.join(MEDIA, "bronphotocavs.png")
+            self.lebronCavs = Label(self, image=image_path)
             self.lebronCavs.grid(row=0, column=2)
         elif self._gamephase == "Heat":
-            self.lebronHeat = Label(self, image="bronphotoheat.png")
+            image_path = os.path.join(MEDIA, "bronphotoheat.png")
+            self.lebronHeat = Label(self, image=image_path)
             self.lebronHeat.grid(row=0, column=2)
         elif self._gamephase == "Lakers":
-            self.lebronLakers = Label(self, image="bronphotolakers.png")
+            image_path = os.path.join(MEDIA, "bronphotolakers.png")
+            self.lebronLakers = Label(self, image=image_path)
             self.lebronLakers.grid(row=0, column=2)
         elif self._gamephase == "Final":
-            self.lebronAkron = Label(self, image="akronohiophoto.png")
+            image_path = os.path.join(MEDIA, "akronohiophoto.png")
+            self.lebronAkron = Label(self, image=image_path)
             self.lebronAkron.grid(row=0, column=2)
         else:
-            self.lebronTrophies = Label(self, image="lebrontrophies1.png")
+            image_path = os.path.join(MEDIA, "lebrontrophies1.png")
+            self.lebronTrophies = Label(self, image=image_path)
             self.lebronTrophies.grid(row=0, column=2)
         self.pack(fill=BOTH, expand=True)
 
