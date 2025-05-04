@@ -53,23 +53,28 @@ class Lcd(Frame):
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         if self._gamephase == "Cavs":
             image_path = os.path.join(MEDIA, "bronphotocavs.png")
-            self.lebronCavs = Label(self, image=image_path)
+            self.lebronCavsImage = PhotoImage(file=image_path)
+            self.lebronCavs = Label(self, image=self.lebronCavsImage)
             self.lebronCavs.grid(row=0, column=2)
         elif self._gamephase == "Heat":
             image_path = os.path.join(MEDIA, "bronphotoheat.png")
-            self.lebronHeat = Label(self, image=image_path)
+            self.lebronHeatImage = PhotoImage(file=image_path)
+            self.lebronHeat = Label(self, image=self.lebronHeatImage)
             self.lebronHeat.grid(row=0, column=2)
         elif self._gamephase == "Lakers":
             image_path = os.path.join(MEDIA, "bronphotolakers.png")
-            self.lebronLakers = Label(self, image=image_path)
+            self.lebronLakersImage = PhotoImage(file=image_path)
+            self.lebronLakers = Label(self, image=self.lebronLakersImage)
             self.lebronLakers.grid(row=0, column=2)
         elif self._gamephase == "Final":
             image_path = os.path.join(MEDIA, "akronohiophoto.png")
-            self.lebronAkron = Label(self, image=image_path)
+            self.lebronAkronImage = PhotoImage(file=image_path)
+            self.lebronAkron = Label(self, image=self.lebronAkronImage)
             self.lebronAkron.grid(row=0, column=2)
         else:
             image_path = os.path.join(MEDIA, "lebrontrophies1.png")
-            self.lebronTrophies = Label(self, image=image_path)
+            self.lebronTrophiesImage = PhotoImage(file=image_path)
+            self.lebronTrophies = Label(self, image=self.lebronTrophiesImage)
             self.lebronTrophies.grid(row=0, column=2)
         self.pack(fill=BOTH, expand=True)
 
