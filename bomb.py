@@ -65,11 +65,11 @@ class BombPhase:
         #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
         self._gui.setTimer(self._timer)
         #setup the keypad thread
-        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target)
+        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target, self._gui)
         #setup the jumper wires thread
-        self._wires = Wires(component_wires, self._gamephase, wires_target)
+        self._wires = Wires(component_wires, self._gamephase, wires_target, self._gui)
         #setup the pushbutton thread
-        self._button = Button(component_button_state, component_button_RGB, self._gamephase, button_target, button_colors, self._timer)
+        self._button = Button(component_button_state, component_button_RGB, self._gamephase, button_target, button_colors, self._timer, self._gui)
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
         self._gui.setButton(self._button)
         #setup the toggle switches thread

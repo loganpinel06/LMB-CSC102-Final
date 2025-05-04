@@ -332,7 +332,7 @@ class Timer(PhaseThread):
 
 # the keypad phase
 class Keypad(PhaseThread):
-    def __init__(self, component, gamephase, target, name="Keypad"):
+    def __init__(self, component, gamephase, target, lcdInstance, name="Keypad"):
         super().__init__(name, component, target)
         # the default value is an empty string
         self._value = ""
@@ -345,6 +345,8 @@ class Keypad(PhaseThread):
             self._target = "2020"
         elif gamephase == "Final":
             self._target = "1111"
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
 
     # runs the thread
     def run(self):
@@ -374,11 +376,27 @@ class Keypad(PhaseThread):
                         self._failed = True
             sleep(0.1)
 
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the toggles sound
+        keypadSound()
+
     # returns the keypad combination as a string
     def __str__(self):
         if (self._defused):
-            #play the keypad sound
-            keypadSound()
             #return the defused message
             return "DEFUSED"
         else:
@@ -387,7 +405,7 @@ class Keypad(PhaseThread):
 # the jumper wires phase
 class Wires(PhaseThread):
     #set the target equal to the correct combination
-    def __init__(self, component, gamephase, target, name="Wires"):
+    def __init__(self, component, gamephase, target, lcdInstance, name="Wires"):
         super().__init__(name, component, target)
         #set the value of the wires to an empty string
         self._value = ""
@@ -398,6 +416,8 @@ class Wires(PhaseThread):
             self._target = "00010"
         elif gamephase == "Lakers":
             self._target = "10100"
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
 
     # runs the thread
     def run(self):
@@ -414,11 +434,27 @@ class Wires(PhaseThread):
                 
             sleep(0.1)
 
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the toggles sound
+        wiresSound()
+
     # returns the jumper wires state as a string
     def __str__(self):
         if (self._defused):
-            #play the wires sound
-            wiresSound()
             #return the defused message
             return "DEFUSED"
         else:
@@ -427,7 +463,7 @@ class Wires(PhaseThread):
 
 # the pushbutton phase
 class Button(PhaseThread):
-    def __init__(self, component_state, component_rgb, gamephase, target, colors, timer, name="Button"):
+    def __init__(self, component_state, component_rgb, gamephase, target, colors, timer, lcdInstance, name="Button"):
         super().__init__(name, component_state, target)
         # the default value is False/Released
         self._value = False
@@ -445,6 +481,8 @@ class Button(PhaseThread):
         self._color = self._cList[0]
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
+        #setup the lcdInstance so we can update the hint label
+        self._lcdInstance = lcdInstance
 
     # runs the thread
     def run(self):
@@ -525,11 +563,27 @@ class Button(PhaseThread):
                     count = 0
             sleep(0.1)
 
+    #subroutine to get a letter for the final code hint and update the label on the GUI
+    def getHint(self):
+        #call the global variables for FINAL_CODE_LIST and FINAL_CODE_HINT
+        global FINAL_CODE_LIST, FINAL_CODE_HINT
+        #give the user a hint for the final code
+        #randomly select a letter from the FINAL_CODE_LIST
+        letter = random.choice(FINAL_CODE_LIST)
+        #remove the letter from the list
+        FINAL_CODE_LIST.remove(letter)
+        #add the letter to the FINAL_CODE_HINT
+        FINAL_CODE_HINT += letter
+
+        #update the hint label on the GUI using .config
+        self._lcdInstance._lfinalhint.config(text="Hint: {}".format(FINAL_CODE_HINT))
+
+        #play the toggles sound
+        buttonSound()
+
     # returns the pushbutton's state as a string
     def __str__(self):
         if (self._defused):
-            #play the button sound
-            buttonSound()
             #return the defused message
             return "DEFUSED"
         else:
