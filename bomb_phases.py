@@ -195,6 +195,8 @@ class Lcd(Frame):
         else:
             self._lfailedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb exploded! You lose!")
             self._lfailedMessage.grid(row=1, column=1, sticky=W)
+            #play the explosion sound
+            explosionSound()
 
         # reconfigure the GUI
         # the retry button
