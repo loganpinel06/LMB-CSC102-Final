@@ -321,8 +321,8 @@ class Keypad(PhaseThread):
                 if (self._value[-1] == "*"):
                     self._value = self._value[:-1]
                     if (self._value == self._target):
-                        self._defused = True
                         ADD = 15
+                        self._defused = True
                     # the combination is incorrect -> phase failed (strike)
                     elif (self._value != self._target):
                         self._failed = True
@@ -362,8 +362,8 @@ class Wires(PhaseThread):
             #check if the value of the wires is equal to the target
             if (self._value == self._target):
                 #the phase is defused
-                self._defused = True
                 ADD = 15
+                self._defused = True
                 
             sleep(0.1)
 
@@ -438,8 +438,8 @@ class Button(PhaseThread):
                     # for G or B, a specific digit must be in the timer (sec) when released
                     #             if (not self._target or self._target in self._timer._sec):
                     if wasGreen:
-                        self._defused = True
                         ADD = 15
+                        self._defused = True
                         #REMEMBER TO CHANGE BACK TO TRUE
                     else:
                         self._failed = True
@@ -508,8 +508,9 @@ class Toggles(PhaseThread):
             
             #checks if self._value and self._target are the same, defusing the toggles phase
             if (self._value == self._target):
-                self._defused = True
                 ADD = 15
+                self._defused = True
+                
             sleep(0.1)
             
     # returns the toggle switches state as a string
