@@ -354,6 +354,7 @@ class Keypad(PhaseThread):
     def run(self):
         self._running = True
         while (self._running):
+            global ADD, SET
             # process keys when keypad key(s) are pressed
             if (self._component.pressed_keys):
                 # debounce
@@ -373,9 +374,11 @@ class Keypad(PhaseThread):
                 if (self._value[-1] == "*"):
                     self._value = self._value[:-1]
                     if (self._value == self._target):
+                        ADD = 15
                         self._defused = True
                     # the combination is incorrect -> phase failed (strike)
                     elif (self._value != self._target):
+                        ADD = -15
                         self._failed = True
             sleep(0.1)
 
@@ -432,11 +435,13 @@ class Wires(PhaseThread):
         self._running = True
         #main loop for the phase
         while (self._running):
+            global ADD, SET
             # get the jumper wire states (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component]) 
             #check if the value of the wires is equal to the target
             if (self._value == self._target):
                 #the phase is defused
+                ADD = 15
                 self._defused = True
                 
             sleep(0.1)
@@ -501,6 +506,7 @@ class Button(PhaseThread):
         self._running = True
         # set the RGB LED color
         while (self._running):
+            global ADD, SET
             self._rgb[2].value = True
             self._rgb[1].value = True
             self._rgb[0].value = True
@@ -534,9 +540,11 @@ class Button(PhaseThread):
                     # for G or B, a specific digit must be in the timer (sec) when released
                     #             if (not self._target or self._target in self._timer._sec):
                     if wasGreen:
+                        ADD = 15
                         self._defused = True
                         #REMEMBER TO CHANGE BACK TO TRUE
                     else:
+                        ADD = -15
                         self._failed = True
                     # note that the pushbutton was released
                     self._pressed = False
@@ -626,7 +634,9 @@ class Toggles(PhaseThread):
             
             #checks if self._value and self._target are the same, defusing the toggles phase
             if (self._value == self._target):
-                self._defused = True 
+                ADD = 15
+                self._defused = True
+             
             sleep(0.1)
 
     #subroutine to get a letter for the final code hint and update the label on the GUI
