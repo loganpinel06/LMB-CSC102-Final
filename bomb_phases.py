@@ -302,6 +302,7 @@ class Keypad(PhaseThread):
     def run(self):
         self._running = True
         while (self._running):
+            global ADD, SET
             # process keys when keypad key(s) are pressed
             if (self._component.pressed_keys):
                 # debounce
@@ -321,6 +322,7 @@ class Keypad(PhaseThread):
                     self._value = self._value[:-1]
                     if (self._value == self._target):
                         self._defused = True
+                        ADD = 15
                     # the combination is incorrect -> phase failed (strike)
                     elif (self._value != self._target):
                         self._failed = True
@@ -354,12 +356,14 @@ class Wires(PhaseThread):
         self._running = True
         #main loop for the phase
         while (self._running):
+            global ADD, SET
             # get the jumper wire states (0->False, 1->True)
             self._value = "".join([str(int(pin.value)) for pin in self._component]) 
             #check if the value of the wires is equal to the target
             if (self._value == self._target):
                 #the phase is defused
                 self._defused = True
+                ADD = 15
                 
             sleep(0.1)
 
@@ -400,6 +404,7 @@ class Button(PhaseThread):
         self._running = True
         # set the RGB LED color
         while (self._running):
+            global ADD, SET
             self._rgb[2].value = True
             self._rgb[1].value = True
             self._rgb[0].value = True
@@ -434,6 +439,7 @@ class Button(PhaseThread):
                     #             if (not self._target or self._target in self._timer._sec):
                     if wasGreen:
                         self._defused = True
+                        ADD = 15
                         #REMEMBER TO CHANGE BACK TO TRUE
                     else:
                         self._failed = True
@@ -502,7 +508,8 @@ class Toggles(PhaseThread):
             
             #checks if self._value and self._target are the same, defusing the toggles phase
             if (self._value == self._target):
-                self._defused = True        
+                self._defused = True
+                ADD = 15
             sleep(0.1)
             
     # returns the toggle switches state as a string
