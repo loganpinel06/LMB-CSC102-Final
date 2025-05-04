@@ -262,8 +262,6 @@ class FinalPhase:
             #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(1000, self._gui.conclusion, False)
-            #play the explosion sound
-            explosionSound()
             #stop checking phases
             return
     

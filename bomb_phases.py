@@ -141,6 +141,8 @@ class Lcd(Frame):
         self._lstrikes.destroy()
         #destroy the game phase label
         self._lgamephase.destroy()
+        #destroy the hint label
+        self._lfinalhint.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
@@ -182,6 +184,8 @@ class Lcd(Frame):
             self._lstrikes.destroy()
             #destroy the game phase label
             self._lgamephase.destroy()
+            #destroy the hint label
+            self._lfinalhint.destroy()
             #showbuttons
             if (SHOW_BUTTONS):
                 self._bpause.destroy()
