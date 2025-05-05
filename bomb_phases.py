@@ -91,8 +91,11 @@ class Lcd(Frame):
             #current game phase
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
             self._lgamephase.grid(row=1, column=0, sticky=W)
-
+            
             #handle the final phase image
+            #call media global
+            global MEDIA
+            #set the image path
             image_path = os.path.join(MEDIA, "ohiostatepng.png")
             #opening the image
             image = Image.open(image_path)
