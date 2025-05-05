@@ -45,7 +45,7 @@ class Lcd(Frame):
     # sets up the LCD "boot" GUI
     def setupBoot(self):
         #access the global variable: media
-        global MEDIA 
+        #global MEDIA 
         # set column weights
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
@@ -54,29 +54,29 @@ class Lcd(Frame):
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         #destroy previous image label
-        if hasattr(self, "_lebronImage"):
-            self._lebronImage.destroy()
-        #getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
-        if self._gamephase == "Cavs":
-            image_path = os.path.join(MEDIA, "bronphotocavs.png")
-        elif self._gamephase == "Heat":
-            image_path = os.path.join(MEDIA, "bronphotoheat.png")
-        elif self._gamephase == "Lakers":
-            image_path = os.path.join(MEDIA, "bronphotolakers.png")
-        elif self._gamephase == "Final":
-            image_path = os.path.join(MEDIA, "akronohiophoto.png")
-        else:
-            image_path = os.path.join(MEDIA, "lebrontrophies1.png") 
-        #opening the image
-        image = Image.open(image_path)
-        #resizing the image
-        resized = image.resize((100, 100), Image.LANCZOS)
-        #updating the opened image
-        updated = ImageTk.PhotoImage(resized)
-        #creating the label and gridding the image
-        self._lebronImage = Label(self, image=updated, bg="black")
-        self._lebronImage.image = updated
-        self._lebronImage.grid(row=0, column=2)
+        #if hasattr(self, "_lebronImage"):
+        #    self._lebronImage.destroy()
+        ##getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
+        #if self._gamephase == "Cavs":
+        #    image_path = os.path.join(MEDIA, "bronphotocavs.png")
+        #elif self._gamephase == "Heat":
+        #    image_path = os.path.join(MEDIA, "bronphotoheat.png")
+        #elif self._gamephase == "Lakers":
+        #    image_path = os.path.join(MEDIA, "bronphotolakers.png")
+        #elif self._gamephase == "Final":
+        #    image_path = os.path.join(MEDIA, "akronohiophoto.png")
+        #else:
+        #    image_path = os.path.join(MEDIA, "lebrontrophies1.png") 
+        ##opening the image
+        #image = Image.open(image_path)
+        ##resizing the image
+        #resized = image.resize((100, 100), Image.LANCZOS)
+        ##updating the opened image
+        #updated = ImageTk.PhotoImage(resized)
+        ##creating the label and gridding the image
+        #self._lebronImage = Label(self, image=updated, bg="black")
+        #self._lebronImage.image = updated
+        #self._lebronImage.grid(row=0, column=2)
         #packing
         self.pack(fill=BOTH, expand=True)
 
@@ -133,6 +133,29 @@ class Lcd(Frame):
             #hint label
             self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: ")
             self._lfinalhint.grid(row=1, column=1, columnspan=3, sticky=W)
+
+            #handle the images
+            #access the global variable: media
+            global MEDIA
+            #getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
+            if self._gamephase == "Cavs":
+                image_path = os.path.join(MEDIA, "bronphotocavs.png")
+            elif self._gamephase == "Heat":
+                image_path = os.path.join(MEDIA, "bronphotoheat.png")
+            elif self._gamephase == "Lakers":
+                image_path = os.path.join(MEDIA, "bronphotolakers.png")
+            else:
+                image_path = os.path.join(MEDIA, "lebrontrophies1.png")
+            #opening the image
+            image = Image.open(image_path)
+            #resizing the image
+            resized = image.resize((100, 100), Image.LANCZOS)
+            #updating the opened image
+            updated = ImageTk.PhotoImage(resized)
+            #creating the label and gridding the image
+            self._lebronImage = Label(self, image=updated, bg="black")
+            self._lebronImage.grid(row=0, column=2)
+
             #showbuttons
             if (SHOW_BUTTONS):
                 # the pause button (pauses the timer)
@@ -167,6 +190,9 @@ class Lcd(Frame):
         self._lstrikes.destroy()
         #destroy the game phase label
         self._lgamephase.destroy()
+        #destroy the image label
+        self._lebronImage.destroy()
+        #show buttons
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
@@ -193,6 +219,8 @@ class Lcd(Frame):
         self._lstrikes.destroy()
         #destroy the game phase label
         self._lgamephase.destroy()
+        #destroy the image label
+        self._lebronImage.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
