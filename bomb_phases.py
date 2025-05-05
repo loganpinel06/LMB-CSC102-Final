@@ -151,10 +151,10 @@ class Lcd(Frame):
             #resizing the image
             resized = image.resize((100, 100), Image.LANCZOS)
             #updating the opened image
-            updated = ImageTk.PhotoImage(resized)
+            self._updated = ImageTk.PhotoImage(resized)
             #creating the label and gridding the image
-            self._lebronImage = Label(self, image=updated, bg="black")
-            self._lebronImage.grid(row=0, column=2)
+            self._lebronImage = Label(self, image=self._updated, bg="black")
+            self._lebronImage.grid(row=5, column=0)
 
             #showbuttons
             if (SHOW_BUTTONS):
