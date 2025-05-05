@@ -39,7 +39,7 @@ def bootupSound():
 #subroutine for the wires sound
 def wiresSound():
     #get the mp3 file path
-    bang = os.path.join(MEDIA, "bang.mp3")
+    bang = os.path.join(MEDIA, "wiresdefuse.mp3")
     #load the mixer
     sound = pygame.mixer.Sound(bang)
     #set the volume to 0.7
@@ -59,7 +59,7 @@ def buttonSound():
 #subroutine for the keypad sound
 def keypadSound():
     #get the mp3 file path
-    greenbean = os.path.join(MEDIA, "greenbean.mp3")
+    greenbean = os.path.join(MEDIA, "keypaddefuse.mp3")
     #load the mixer
     sound = pygame.mixer.Sound(greenbean)
     #set the volume to 0.7
