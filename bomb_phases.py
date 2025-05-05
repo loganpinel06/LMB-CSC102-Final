@@ -98,7 +98,7 @@ class Lcd(Frame):
             #opening the image
             image = Image.open(image_path)
             #resizing the image
-            resized = image.resize((100, 100), Image.LANCZOS)
+            resized = image.resize((300, 300), Image.LANCZOS)
             #updating the opened image
             self._updated = ImageTk.PhotoImage(resized)
             #creating the label and gridding the image
@@ -153,7 +153,7 @@ class Lcd(Frame):
             #opening the image
             image = Image.open(image_path)
             #resizing the image
-            resized = image.resize((100, 100), Image.LANCZOS)
+            resized = image.resize((300, 300), Image.LANCZOS)
             #updating the opened image
             self._updated = ImageTk.PhotoImage(resized)
             #creating the label and gridding the image
