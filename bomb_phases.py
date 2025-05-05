@@ -53,6 +53,9 @@ class Lcd(Frame):
         # the scrolling informative "boot" text
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
+        #destroy previous image label
+        if hasattr(self, "_lebronImage"):
+            self._lebronImage.destroy()
         #getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
         if self._gamephase == "Cavs":
             image_path = os.path.join(MEDIA, "bronphotocavs.png")
@@ -70,9 +73,11 @@ class Lcd(Frame):
         resized = image.resize((100, 100), Image.LANCZOS)
         #updating the opened image
         updated = ImageTk.PhotoImage(resized)
-        #creating the label, gridding the image, and packing 
-        lebronImage = Label(self, image=updated)
-        lebronImage.grid(row=0, column=0)
+        #creating the label and gridding the image
+        self._lebronImage = Label(self, image=updated, bg="black")
+        self._lebronImage.image = updated
+        self._lebronImage.grid(row=0, column=2)
+        #packing
         self.pack(fill=BOTH, expand=True)
 
     # sets up the LCD GUI
