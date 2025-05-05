@@ -53,56 +53,26 @@ class Lcd(Frame):
         # the scrolling informative "boot" text
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
+        #getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
         if self._gamephase == "Cavs":
             image_path = os.path.join(MEDIA, "bronphotocavs.png")
-            #open the image with pillow
-            self.lebronCavsImage = Image.open(image_path)
-            #resize the image
-            resized = self.lebronCavsImage.resize((100, 100), Image.LANCZOS)
-            #update the image
-            self.updatedlebronCavs = ImageTk.PhotoImage(resized)
-            self.lebronCavs = Label(self, image=self.updatedlebronCavs)
-            self.lebronCavs.grid(row=0, column=2)
         elif self._gamephase == "Heat":
             image_path = os.path.join(MEDIA, "bronphotoheat.png")
-            #open the image with pillow
-            self.lebronHeatImage = Image.open(image_path)
-            #resize the image
-            resized = self.lebronHeatImage.resize((100, 100), Image.LANCZOS)
-            #update the image
-            self.updatedlebronHeat = ImageTk.PhotoImage(resized)
-            self.lebronHeat = Label(self, image=self.updatedlebronHeat)
-            self.lebronHeat.grid(row=0, column=2)
         elif self._gamephase == "Lakers":
             image_path = os.path.join(MEDIA, "bronphotolakers.png")
-            #open the image with pillow
-            self.lebronLakersImage = Image.open(image_path)
-            #resize the image
-            resized = self.lebronLakersImage.resize((100, 100), Image.LANCZOS)
-            #update the image
-            self.updatedlebronLakers = ImageTk.PhotoImage(resized)
-            self.lebronLakers = Label(self, image=self.updatedlebronLakers)
-            self.lebronLakers.grid(row=0, column=2)
         elif self._gamephase == "Final":
             image_path = os.path.join(MEDIA, "akronohiophoto.png")
-            #open the image with pillow
-            self.lebronAkronImage = Image.open(image_path)
-            #resize the image
-            resized = self.lebronAkronImage.resize((100, 100), Image.LANCZOS)
-            #update the image
-            self.updatedlebronAkron = ImageTk.PhotoImage(resized)
-            self.lebronAkron = Label(self, image=self.updatedlebronAkron)
-            self.lebronAkron.grid(row=0, column=2)
         else:
-            image_path = os.path.join(MEDIA, "lebrontrophies1.png")
-            #open the image with pilow
-            self.lebronTrophiesImage = Image.open(image_path)
-            #resize the image
-            resized = self.lebronTrophiesImage.resize((100, 100), Image.LANCZOS)
-            #update the image 
-            self.updatedlebronTrophies = ImageTk.PhotoImage(resized)
-            self.lebronTrophies = Label(self, image=self.updatedlebronTrophies)
-            self.lebronTrophies.grid(row=0, column=2)
+            image_path = os.path.join(MEDIA, "lebrontrophies1.png") 
+        #opening the image
+        image = Image.open(image_path)
+        #resizing the image
+        resized = image.resize((100, 100), Image.LANCZOS)
+        #updating the opened image
+        updated = ImageTk.PhotoImage(resized)
+        #creating the label, gridding the image, and packing 
+        lebronImage = Label(self, image=updated)
+        lebronImage.grid(row=0, column=0)
         self.pack(fill=BOTH, expand=True)
 
     # sets up the LCD GUI
