@@ -68,26 +68,28 @@ Final Phase
 
 Sound Implementation
 -Wires
-    -Defused: Bang Audio
+    -Defused: wiresdefuse.mp3
 -Button
-    -Defused: Swoosh Audio
+    -Defused: swish.mp3
 -Keypad
-    -Defused: Irish Spring Green Audio
+    -Defused: keypaddefuse.mp3
 -Toggles
-    -Defused: ChaChing Audio
+    -Defused: money.mp3
 -Main Game/Miscellaneous
-    -Strike: OMG Valentine Audio
-    -Game Launching: Trophies Audio
-    -Switching Phases: Trophies Audio
-    -Game Won/Bomb Defused: Trophies Audio
-    -Game Lost/Bomb Exploded: BooBooBooBoo Audio
+    -Strike: strikesfx.mp3
+    -Game Launching: trophiesdrake.mp3
+    -Switching Phases: trophiesdrake.mp3
+    -Game Won/Bomb Defused: trophiesdrake.mp3
+    -Game Lost/Bomb Exploded: bombexplode.mp3
 
 Picture Implementation
 -Cavs Phase
-    -LeBron Cavs PNG
+    -bronphotocavs.png
 -Heat Phase
-    -LeBron Heat PNG
+    -bronphotoheat.png
 -Lakers Phase
-    -LeBron Heat PNG
--Main Game/Miscellaneous
-    -Game Won/Bomb Defused: LeBron Trophies Image
+    -bronphotolakers.png
+-Final Phase
+    -akronohiophoto.png
+-Main Game Completed / Bomb-Defused
+    -lebrontrophies1.png

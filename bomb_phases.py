@@ -58,7 +58,7 @@ class Lcd(Frame):
             #open the image with pillow
             self.lebronCavsImage = Image.open(image_path)
             #resize the image
-            resized = self.lebronCavsImage.resize((100, 100), Image.ANTIALIAS)
+            resized = self.lebronCavsImage.resize((100, 100), Image.LANCZOS)
             #update the image
             self.updatedlebronCavs = ImageTk.PhotoImage(resized)
             self.lebronCavs = Label(self, image=self.updatedlebronCavs)
@@ -68,7 +68,7 @@ class Lcd(Frame):
             #open the image with pillow
             self.lebronHeatImage = Image.open(image_path)
             #resize the image
-            resized = self.lebronHeatImage.resize((100, 100), Image.ANTIALIAS)
+            resized = self.lebronHeatImage.resize((100, 100), Image.LANCZOS)
             #update the image
             self.updatedlebronHeat = ImageTk.PhotoImage(resized)
             self.lebronHeat = Label(self, image=self.updatedlebronHeat)
@@ -78,7 +78,7 @@ class Lcd(Frame):
             #open the image with pillow
             self.lebronLakersImage = Image.open(image_path)
             #resize the image
-            resized = self.lebronLakersImage.resize((100, 100), Image.ANTIALIAS)
+            resized = self.lebronLakersImage.resize((100, 100), Image.LANCZOS)
             #update the image
             self.updatedlebronLakers = ImageTk.PhotoImage(resized)
             self.lebronLakers = Label(self, image=self.updatedlebronLakers)
@@ -88,7 +88,7 @@ class Lcd(Frame):
             #open the image with pillow
             self.lebronAkronImage = Image.open(image_path)
             #resize the image
-            resized = self.lebronAkronImage.resize((100, 100), Image.ANTIALIAS)
+            resized = self.lebronAkronImage.resize((100, 100), Image.LANCZOS)
             #update the image
             self.updatedlebronAkron = ImageTk.PhotoImage(resized)
             self.lebronAkron = Label(self, image=self.updatedlebronAkron)
@@ -98,7 +98,7 @@ class Lcd(Frame):
             #open the image with pilow
             self.lebronTrophiesImage = Image.open(image_path)
             #resize the image
-            resized = self.lebronTrophiesImage.resize((100, 100), Image.ANTIALIAS)
+            resized = self.lebronTrophiesImage.resize((100, 100), Image.LANCZOS)
             #update the image 
             self.updatedlebronTrophies = ImageTk.PhotoImage(resized)
             self.lebronTrophies = Label(self, image=self.updatedlebronTrophies)
