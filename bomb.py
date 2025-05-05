@@ -8,6 +8,8 @@
 from bomb_configs import *
 #import the phases
 from bomb_phases import *
+#import the audio
+from bomb_audio import *
 
 #create a class for the BombPhases
 #this will act as a parent class to run all bomb phases but will allow us to do this three times
@@ -63,15 +65,15 @@ class BombPhase:
         #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
         self._gui.setTimer(self._timer)
         #setup the keypad thread
-        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target)
+        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target, self._gui)
         #setup the jumper wires thread
-        self._wires = Wires(component_wires, self._gamephase, wires_target)
+        self._wires = Wires(component_wires, self._gamephase, wires_target, self._gui)
         #setup the pushbutton thread
-        self._button = Button(component_button_state, component_button_RGB, self._gamephase, button_target, button_colors, self._timer)
+        self._button = Button(component_button_state, component_button_RGB, self._gamephase, button_target, button_colors, self._timer, self._gui)
         #bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
         self._gui.setButton(self._button)
         #setup the toggle switches thread
-        self._toggles = Toggles(component_toggles, self._gamephase, toggles_target)
+        self._toggles = Toggles(component_toggles, self._gamephase, toggles_target, self._gui)
 
         #start the phase threads
         self._timer.start()
@@ -219,7 +221,7 @@ class FinalPhase:
         #bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
         self._gui.setTimer(self._timer)
         #setup the keypad thread
-        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target)
+        self._keypad = Keypad(component_keypad, self._gamephase, keypad_target, self._gui)
         
         #start the phase threads
         self._timer.start()
@@ -253,7 +255,7 @@ class FinalPhase:
                 self._keypad._failed = False
                 self._keypad._value = ""
        
-       #note the strikes on the GUI
+        #note the strikes on the GUI
         self._gui._lstrikes["text"] = f"Strikes left: {self._strikes_left}"
         #too many strikes -> explode!
         if (self._strikes_left == 0):
@@ -265,7 +267,7 @@ class FinalPhase:
     
         #the bomb has been successfully defused!
         #bomb will only fully shut off after the lakers game phase
-        if (self._active_phases == 0 and self._gamephase == "Lakers"):
+        if (self._active_phases == 0):
             #turn off the bomb and render the conclusion GUI
             self.turn_off()
             self._gui.after(100, self._gui.conclusion, True)
@@ -290,14 +292,13 @@ class FinalPhase:
         #turn off the 7-segment display
         component_7seg.blink_rate = 0
         component_7seg.fill(0)
-        #turn off the pushbutton's LED
-        for pin in self._button._rgb:
-            pin.value = True
         
-
 #main method
 #bootup method
 def bootup(phase, n=0):
+    #play the bootup sound on the first call
+    if n == 0:
+        bootupSound()
     #if we're not animating (or we're at the end of the bootup text)
     if (not ANIMATE or n == len(phase._boot_text)):
         #if we're not animating, render the entire text at once (and don't process \x00)
