@@ -72,8 +72,8 @@ class Lcd(Frame):
 
     # sets up the LCD GUI
     def setup(self):
-        #call global variable FINAL_CODE for the hin label
-        global FINAL_CODE
+        #call global variable FINAL_CODE for the hin label and MEDIA for the image
+        global FINAL_CODE, MEDIA
         #special setup for final game phase
         if self._gamephase == "Final":
             #keypad label
@@ -93,8 +93,6 @@ class Lcd(Frame):
             self._lgamephase.grid(row=1, column=0, sticky=W)
             
             #handle the final phase image
-            #call media global
-            global MEDIA
             #set the image path
             image_path = os.path.join(MEDIA, "ohiostatepng.png")
             #opening the image
@@ -143,8 +141,6 @@ class Lcd(Frame):
             self._lfinalhint.grid(row=1, column=1, columnspan=3, sticky=W)
 
             #handle the images
-            #access the global variable: media
-            global MEDIA
             #getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
             if self._gamephase == "Cavs":
                 image_path = os.path.join(MEDIA, "bronphotocavs.png")
