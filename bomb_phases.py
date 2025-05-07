@@ -14,12 +14,17 @@ from time import sleep
 import os
 import sys
 import random
+#importing pillow for image resizing purposes
+from PIL import ImageTk, Image
 #import the bomb_audio file and pygame
 import pygame
 from bomb_audio import *
 #create global variables to change clock
 ADD = 0
 SET = 0
+
+#create global variable for media directory
+MEDIA = "/home/spartans/LMB-CSC102-Final/media"
 
 #create global variables for the final code hint
 FINAL_CODE_HINT = ""
@@ -30,6 +35,7 @@ FINAL_CODE_LIST = ["K", "i", "d", "F", "r", "o", "m", "A", "k", "r", "o", "n"]
 
 #initialize pygame
 initPygame()
+
 
 #########
 # classes
@@ -52,6 +58,8 @@ class Lcd(Frame):
 
     # sets up the LCD "boot" GUI
     def setupBoot(self):
+        #access the global variable: media
+        #global MEDIA 
         # set column weights
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
@@ -59,12 +67,13 @@ class Lcd(Frame):
         # the scrolling informative "boot" text
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
+        #packing
         self.pack(fill=BOTH, expand=True)
 
     # sets up the LCD GUI
     def setup(self):
-        #call global variable FINAL_CODE for the hin label
-        global FINAL_CODE
+        #call global variable FINAL_CODE for the hin label and MEDIA for the image
+        global FINAL_CODE, MEDIA
         #special setup for final game phase
         if self._gamephase == "Final":
             #keypad label
@@ -82,6 +91,20 @@ class Lcd(Frame):
             #current game phase
             self._lgamephase = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Game phase: {}".format(self._gamephase))
             self._lgamephase.grid(row=1, column=0, sticky=W)
+            
+            #handle the final phase image
+            #set the image path
+            image_path = os.path.join(MEDIA, "ohiostatepng.png")
+            #opening the image
+            image = Image.open(image_path)
+            #resizing the image
+            resized = image.resize((150, 150), Image.LANCZOS)
+            #updating the opened image
+            self._updated = ImageTk.PhotoImage(resized)
+            #creating the label and gridding the image
+            self._lebronImage = Label(self, image=self._updated, bg="black")
+            self._lebronImage.grid(row=5, column=2)
+
             #showbuttons
             if (SHOW_BUTTONS):
                 # the pause button (pauses the timer)
@@ -116,6 +139,27 @@ class Lcd(Frame):
             #hint label
             self._lfinalhint = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Hint: {}".format(FINAL_CODE_HINT))
             self._lfinalhint.grid(row=1, column=1, columnspan=3, sticky=W)
+
+            #handle the images
+            #getting the image path based on current game phase (e.g. Cavs, Heat, etc.)
+            if self._gamephase == "Cavs":
+                image_path = os.path.join(MEDIA, "bronphotocavs.png")
+            elif self._gamephase == "Heat":
+                image_path = os.path.join(MEDIA, "bronphotoheat.png")
+            elif self._gamephase == "Lakers":
+                image_path = os.path.join(MEDIA, "bronphotolakers.png")
+            else:
+                image_path = os.path.join(MEDIA, "lebrontrophies1.png")
+            #opening the image
+            image = Image.open(image_path)
+            #resizing the image
+            resized = image.resize((150, 150), Image.LANCZOS)
+            #updating the opened image
+            self._updated = ImageTk.PhotoImage(resized)
+            #creating the label and gridding the image
+            self._lebronImage = Label(self, image=self._updated, bg="black")
+            self._lebronImage.grid(row=5, column=2)
+
             #showbuttons
             if (SHOW_BUTTONS):
                 # the pause button (pauses the timer)
@@ -150,8 +194,11 @@ class Lcd(Frame):
         self._lstrikes.destroy()
         #destroy the game phase label
         self._lgamephase.destroy()
+        #destroy the image label
+        self._lebronImage.destroy()
         #destroy the hint label
         self._lfinalhint.destroy()
+        #show buttons
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
@@ -177,6 +224,7 @@ class Lcd(Frame):
             self._lstrikes.destroy()
             self._lfinalhint.destroy()
             self._lgamephase.destroy()
+            self._lebronImage.destroy()
             #showbuttons
             if (SHOW_BUTTONS):
                 self._bpause.destroy()
@@ -195,6 +243,8 @@ class Lcd(Frame):
             self._lgamephase.destroy()
             #destroy the hint label
             self._lfinalhint.destroy()
+            #destroy image
+            self._lebronImage.destroy()
             #showbuttons
             if (SHOW_BUTTONS):
                 self._bpause.destroy()

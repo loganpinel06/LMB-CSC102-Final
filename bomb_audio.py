@@ -39,15 +39,13 @@ def bootupSound():
 #subroutine for the wires sound
 def wiresSound():
     #get the mp3 file path
-    bang = os.path.join(MEDIA, "bang.mp3")
+    bang = os.path.join(MEDIA, "wiresdefuse.mp3")
     #load the mixer
     sound = pygame.mixer.Sound(bang)
     #set the volume to 0.7
     sound.set_volume(0.7)
     #play the sound
     sound.play()
-    #pause for 8 seconds so the sound can play
-    pygame.time.wait(8000)
 
 #subroutine for the button sound
 def buttonSound():
@@ -57,21 +55,17 @@ def buttonSound():
     sound = pygame.mixer.Sound(swish)
     #play the sound
     sound.play()
-    #pause for 2 seconds so the sound can play
-    pygame.time.wait(2000)
 
 #subroutine for the keypad sound
 def keypadSound():
     #get the mp3 file path
-    greenbean = os.path.join(MEDIA, "greenbean.mp3")
+    greenbean = os.path.join(MEDIA, "keypaddefuse.mp3")
     #load the mixer
     sound = pygame.mixer.Sound(greenbean)
     #set the volume to 0.7
     sound.set_volume(0.7)
     #play the sound
     sound.play()
-    #pause for 5 seconds so the sound can play
-    pygame.time.wait(5000)
 
 #subroutine for the toggles sound
 def togglesSound():
@@ -81,8 +75,6 @@ def togglesSound():
     sound = pygame.mixer.Sound(money)
     #play the sound
     sound.play()
-    #pause for 1 second so the sound can play
-    pygame.time.wait(1000)
 
 #subroutine for the explosion sound
 def explosionSound():
@@ -92,7 +84,5 @@ def explosionSound():
     sound = pygame.mixer.Sound(explosion)
     #play the sound
     sound.play()
-    #pause for 3 seconds so the sound can play
-    pygame.time.wait(3000)
     #stop the sound early
     sound.stop()
