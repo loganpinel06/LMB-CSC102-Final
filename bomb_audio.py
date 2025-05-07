@@ -84,8 +84,6 @@ def explosionSound():
     sound = pygame.mixer.Sound(explosion)
     #play the sound
     sound.play()
-    #stop the sound early
-    sound.stop()
 
 #subroutine for the strike sound
 def strikeSound():

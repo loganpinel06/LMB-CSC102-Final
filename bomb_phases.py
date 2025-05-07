@@ -260,6 +260,10 @@ class Lcd(Frame):
         else:
             self._lfailedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb exploded! You lose!")
             self._lfailedMessage.grid(row=1, column=1, sticky=W)
+            #stop playing any sounds (strike sound that overlaps)
+            pygame.mixer.stop()
+            #sleep for half a second so the mixer can react
+            sleep(0.5)
             #force the GUI to update before playing the explosion sound
             self.update_idletasks()
             #play the explosion sound
@@ -417,11 +421,8 @@ class Keypad(PhaseThread):
                     except:
                         key = ""
                     sleep(0.1)
-                #delete function with "#" key
-                if key == "#" and (len(self._value) > 0):
-                    self._value = self._value[:-1]
-                else:
-                    self._value += str(key)
+                
+                self._value += str(key)
                 # the combination is correct -> phase defused
                 if (self._value[-1] == "*"):
                     self._value = self._value[:-1]
@@ -432,6 +433,9 @@ class Keypad(PhaseThread):
                     elif (self._value != self._target):
                         ADD = -15
                         self._failed = True
+                #delete function with "#" key
+                elif key == "#" and len(self._value) > 0:
+                    self._value = self._value[:-2]
             sleep(0.1)
 
     #subroutine to get a letter for the final code hint and update the label on the GUI
