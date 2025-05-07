@@ -173,6 +173,9 @@ class BombPhase:
     def strike(self):
         #note the strike
         self._strikes_left -= 1
+        #play the strike sound
+        strikeSound()
+
 
     #method to setup turn off
     #this will also be used to stop a phase when changing the game phases
@@ -281,6 +284,8 @@ class FinalPhase:
     def strike(self):
         #note the strike
         self._strikes_left -= 1
+        #play the strike sound
+        strikeSound()
 
     #method to setup turn off
     #this will also be used to stop a phase when changing the game phases

@@ -86,3 +86,12 @@ def explosionSound():
     sound.play()
     #stop the sound early
     sound.stop()
+
+#subroutine for the strike sound
+def strikeSound():
+    #get the mp3 file path
+    strike = os.path.join(MEDIA, "strikesfx.mp3")
+    #load the mixer
+    sound = pygame.mixer.Sound(strike)
+    #play the sound
+    sound.play()

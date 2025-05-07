@@ -254,6 +254,8 @@ class Lcd(Frame):
         if success:
             self._lcompletedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb defused! You win!")
             self._lcompletedMessage.grid(row=1, column=1, sticky=W)
+            #play the main music
+            bootupSound()
         #else show a failure message
         else:
             self._lfailedMessage = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Bomb exploded! You lose!")
@@ -266,10 +268,10 @@ class Lcd(Frame):
         # reconfigure the GUI
         # the retry button
         self._bretry = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Retry", anchor=CENTER, command=self.retry)
-        self._bretry.grid(row=1, column=0, pady=40)
+        self._bretry.grid(row=3, column=0, pady=40)
         # the quit button
         self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit", anchor=CENTER, command=self.quit)
-        self._bquit.grid(row=1, column=2, pady=40)
+        self._bquit.grid(row=3, column=2, pady=40)
 
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
